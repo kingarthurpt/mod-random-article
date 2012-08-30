@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5.6" method="upgrade">
+	<name>Random Article</name>
+	<author>Artur Alves</author>
+	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
+	<creationDate>August 2012</creationDate>
+	<version>0.1.0</version>
+	<description>A simple module that displays a random article.</description>
+	<files>
+		<filename>mod_random-article.xml</filename>
+		<filename module="mod_random-article">mod_random-article.php</filename>
+		<filename>index.html</filename>
+		<filename>helper.php</filename>
+		<filename>tmpl/default.php</filename>
+		<filename>tmpl/index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="Suffix for individual css styling" />
+	 
+				<field name="category" type="category" extension="com_content" label="Select a category" description="Category from where will be returned the random article" />
+				
+				<field name="subcategories" type="radio" default="1" label="Include Subcategories" description="Include subcategories">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+      
+				<field name="title" type="radio" default="1" label="Display Title" description="Display Title">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+    
+				<field name="linktitle" type="radio" default="1" label="Link Title" description="Link Title">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>      
+      
+				<field name="introtext" type="radio" default="1" label="Display Introtext" description="Display Introtext">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+    
+				<field name="readmore" type="radio" default="1" label="Display Readmore" description="Display Readmore">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+    
+				<field name="fulltext" type="radio" default="1" label="Display Fulltext" description="Display Fulltext">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+    
+				<field name="numberArticles" type="text" default="1" label="Number of articles" description="Number of random articles to be displayed">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+		</fields>
+ 	</config>
+	<params>
+	</params>
+</extension>
