@@ -9,7 +9,7 @@
 class modRandomArticleHelper {
 	
 	function getArticles( &$params ) {
-		$numberArticles = $params->get('numberArticles');		
+		$numberArticles = intval($params->get('numberArticles'));		
 		
 		// Database query	
 		if($params->get('subcategories'))
