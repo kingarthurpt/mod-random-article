@@ -39,11 +39,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<?php if($params->get('fulltext')) : ?>
 				<div class="fulltext"> <?php echo $article->fulltext; ?> </div>
 			<?php endif; ?>
-
+		</div>
 		<?php 
 		$i++;	
 	} 
-	?>
-		
-	</div>
+	?>	
 </div>
