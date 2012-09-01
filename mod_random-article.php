@@ -1,10 +1,22 @@
 <?php
+/**
+ * @package Module Random Article for Joomla! 2.5+
+ * @version $Id$
+ * @author Artur Alves
+ * @copyright (C) 2010- Artur Alves
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+**/
  
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
  
 // Include the syndicate functions only once
+if(!defined('DS'))
+	define('DS',DIRECTORY_SEPARATOR);
 require_once( dirname(__FILE__).DS.'helper.php' );
+
+$language = JFactory::getLanguage();
+$language->load('mod_random-article');
 
 $articles = modRandomArticleHelper::getArticles( $params );
 

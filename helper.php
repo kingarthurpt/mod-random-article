@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * @package Module Random Article for Joomla! 2.5+
+ * @version $Id$
+ * @author Artur Alves
+ * @copyright (C) 2010- Artur Alves
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+**/
 class modRandomArticleHelper {
 	
 	function getArticles( &$params ) {

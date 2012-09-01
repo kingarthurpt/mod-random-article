@@ -3,8 +3,9 @@
 	<name>Random Article</name>
 	<author>Artur Alves</author>
 	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
-	<creationDate>August 2012</creationDate>
-	<version>0.1.0</version>
+	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
+	<creationDate>September 2012</creationDate>
+	<version>1.0</version>
 	<description>A simple module that displays a random article.</description>
 	<files>
 		<filename>mod_random-article.xml</filename>
@@ -14,44 +15,48 @@
 		<filename>tmpl/default.php</filename>
 		<filename>tmpl/index.html</filename>
 	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.mod_random-article.ini</language>
+		<language tag="pt-PT">language/pt-PT/pt-PT.mod_random-article.ini</language>
+	</languages>
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="Suffix for individual css styling" />
+				<field name="moduleclass_sfx" type="text" default="" label="MOD_RANDOM_ARTICLE_MODULE_CLASS_SFX_LABEL" description="MOD_RANDOM_ARTICLE_MODULE_CLASS_SFX_DESC" />
 	 
-				<field name="category" type="category" extension="com_content" label="Select a category" description="Category from where will be returned the random article" />
+				<field name="category" type="category" extension="com_content" label="MOD_RANDOM_ARTICLE_CATEGORY_LABEL" description="MOD_RANDOM_ARTICLE_CATEGORY_DESC" />
 				
-				<field name="subcategories" type="radio" default="1" label="Include Subcategories" description="Include subcategories">
+				<field name="subcategories" type="radio" default="1" label="MOD_RANDOM_ARTICLE_SUBCATEGORIES_LABEL" description="MOD_RANDOM_ARTICLE_SUBCATEGORIES_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
       
-				<field name="title" type="radio" default="1" label="Display Title" description="Display Title">
+				<field name="title" type="radio" default="1" label="MOD_RANDOM_ARTICLE_TITLE_LABEL" description="MOD_RANDOM_ARTICLE_TITLE_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
     
-				<field name="linktitle" type="radio" default="1" label="Link Title" description="Link Title">
+				<field name="linktitle" type="radio" default="1" label="MOD_RANDOM_ARTICLE_LINK_TITLE_LABEL" description="MOD_RANDOM_ARTICLE_LINK_TITLE_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>      
       
-				<field name="introtext" type="radio" default="1" label="Display Introtext" description="Display Introtext">
+				<field name="introtext" type="radio" default="1" label="MOD_RANDOM_ARTICLE_INTROTEXT_LABEL" description="MOD_RANDOM_ARTICLE_INTROTEXT_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
     
-				<field name="readmore" type="radio" default="1" label="Display Readmore" description="Display Readmore">
+				<field name="readmore" type="radio" default="1" label="MOD_RANDOM_ARTICLE_READMORE_LABEL" description="MOD_RANDOM_ARTICLE_READMORE_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
     
-				<field name="fulltext" type="radio" default="1" label="Display Fulltext" description="Display Fulltext">
+				<field name="fulltext" type="radio" default="1" label="MOD_RANDOM_ARTICLE_FULLTEXT_LABEL" description="MOD_RANDOM_ARTICLE_FULLTEXT_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
     
-				<field name="numberArticles" type="text" default="1" label="Number of articles" description="Number of random articles to be displayed">
+				<field name="numberArticles" type="text" default="1" label="MOD_RANDOM_ARTICLE_NUMBERARTICLES_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERARTICLES_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
