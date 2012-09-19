@@ -9,7 +9,8 @@
 class modRandomArticleHelper {
 	
 	function getArticles( &$params ) {
-		$numberArticles = intval($params->get('numberArticles'));		
+		$numberArticles = intval($params->get('numberArticles'));
+		$categories = implode(",", $params->get('category'));
 		
 		// Database query	
 		if($params->get('subcategories'))
@@ -18,13 +19,13 @@ class modRandomArticleHelper {
 						"WHERE catid in ".
 							"( SELECT id ".
 								"FROM #__categories ".
-								"WHERE parent_id= ".$params->get('category')." OR id= " .$params->get('category') ." ) ".
+								"WHERE parent_id in (".$categories.") OR id in (" .$categories .") ) ".
 								"ORDER BY RAND() ".
 								"LIMIT ".$numberArticles;
 		else		
 			$query = "SELECT * ".
 						"FROM #__content ".
-						"WHERE catid = ". $params->get('category') . " ".
+						"WHERE catid in (". $categories . ") ".
 						"ORDER BY RAND() ".
 						"LIMIT ".$numberArticles;
 
