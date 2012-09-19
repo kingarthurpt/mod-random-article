@@ -45,7 +45,15 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-    
+				
+				<field name="introtextlimit" type="list" default="" label="MOD_RANDOM_ARTICLE_INTROTEXT_LIMIT_LABEL" description="MOD_RANDOM_ARTICLE_INTROTEXT_LIMIT_DESC">
+					<option value="0">JNO</option>
+					<option value="1">MOD_RANDOM_ARTICLE_INTROTEXT_LIMIT_OPTION1</option>
+					<option value="2">MOD_RANDOM_ARTICLE_INTROTEXT_LIMIT_OPTION2</option>
+				</field>
+				
+				<field name="introtextlimitcount" type="text" default="25" label="MOD_RANDOM_ARTICLE_INTROTEXT_LIMITCOUNT_LABEL" description="MOD_RANDOM_ARTICLE_INTROTEXT_LIMITCOUNT_DESC"/>
+				    
 				<field name="readmore" type="radio" default="1" label="MOD_RANDOM_ARTICLE_READMORE_LABEL" description="MOD_RANDOM_ARTICLE_READMORE_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>

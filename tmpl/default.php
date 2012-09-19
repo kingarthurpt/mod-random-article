@@ -29,7 +29,28 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<?php endif; ?>
 			
 			<?php if($params->get('introtext')) : ?>
-				<div class="introtext"> <?php echo $article->introtext; ?> </div>
+				<?php if($params->get('introtextlimit') == 0) : ?>
+					<div class="introtext"> <?php echo $article->introtext; ?> </div>
+				<?php else: ?>
+					<div class="introtext">
+						<?php
+							$limitCount = intval($params->get('introtextlimitcount'));
+							if($limitCount < 0)
+								$limitCount = 0;
+							
+							if($params->get('introtextlimit') == 1) {
+								$introtext = explode(" ", $article->introtext, $limitCount + 1);
+								array_pop($introtext);
+								$introtext = implode(" ", $introtext);
+								echo $introtext;
+							}
+							elseif($params->get('introtextlimit') == 2) {
+								$introtext = substr($article->introtext, 0, $limitCount);
+								echo $introtext;
+							}										
+						?>
+					</div>
+				<?php endif; ?>
 			<?php endif; ?>
 			
 			<?php if($params->get('readmore')) : ?>
