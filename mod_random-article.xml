@@ -3,9 +3,10 @@
 	<name>Random Article</name>
 	<author>Artur Alves</author>
 	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
+	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
 	<creationDate>September 2012</creationDate>
-	<version>1.0</version>
+	<version>1.1</version>
 	<description>A simple module that displays a random article.</description>
 	<files>
 		<filename>mod_random-article.xml</filename>
@@ -17,8 +18,12 @@
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.mod_random-article.ini</language>
+		<language tag="en-US">language/en-US/en-US.mod_random-article.ini</language>
 		<language tag="pt-PT">language/pt-PT/pt-PT.mod_random-article.ini</language>
 	</languages>
+	<updateservers>
+		<server type="extension" priority="1" name="ArturAlves">http://mod-random-article.googlecode.com/files/mod_random-article.xml</server>
+	</updateservers>
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
