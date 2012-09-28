@@ -8,23 +8,25 @@
 **/
  
 // no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
  
-// Include the syndicate functions only once
+// Fix for Joomla 3
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPARATOR);
-require_once( dirname(__FILE__).DS.'helper.php' );
+
+require_once(dirname(__FILE__).DS.'helper.php');
 
 $language = JFactory::getLanguage();
 $language->load('mod_random-article');
 
-$articles = modRandomArticleHelper::getArticles( $params );
-
-$i = 0;
-foreach($articles as $article) {
-	$urls[$i] = modRandomArticleHelper::getUrl( $article );
-	$i++;
+$articles = modRandomArticleHelper::getArticles($params);
+if($articles > 0) { 
+	$i = 0;
+	foreach($articles as $article) {
+		$urls[$i] = modRandomArticleHelper::getUrl($article);
+		$i++;
+	}
 }
 
-require( JModuleHelper::getLayoutPath( 'mod_random-article' ) ); 
+require(JModuleHelper::getLayoutPath('mod_random-article')); 
 ?>
