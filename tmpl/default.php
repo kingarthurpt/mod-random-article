@@ -9,9 +9,18 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
+
+if($params->get('html5')) 
+	$html5 = 1; 
+else 
+	$html5 = 0;
 ?>
 
-<div class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
+<?php if($html5) : ?>
+	<section class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
+<?php else: ?>
+	<div class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
+<?php endif; ?>
 
 	<?php
 	// Shows an error if the user didn't select any category
@@ -20,10 +29,16 @@ defined('_JEXEC') or die('Restricted access');
 			echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_1');
 	}
 	else {
+		
 		$i = 0;
 		foreach($articles as $article) { ?>
-		
-			<div class="random-article">
+			
+			<?php if($html5) : ?>
+				<article class="random-article">
+			<?php else: ?>
+				<div class="random-article">
+			<?php endif; ?>
+			
 				<?php if($params->get('title')) : ?>
 					<div class="title">
 						<?php if($params->get('linktitle')) : ?>
@@ -35,36 +50,62 @@ defined('_JEXEC') or die('Restricted access');
 				<?php endif; ?>
 				
 				<?php if($params->get('introtext')) : ?>
-					<?php if($params->get('introtextlimit') == 0) : ?>
-						<div class="introtext"> <?php echo $article->introtext; ?> </div>
-					<?php else: ?>
-						<div class="introtext">
-							<?php
-								$limitCount = intval($params->get('introtextlimitcount'));
-								if($limitCount < 0)
-									$limitCount = 0;
+					<div class="introtext">
+					<?php if($params->get('introtextimage')) : 
+													
+							// Copied this code from componentes/com_content/views/category/tmpl/blog_item.php
+							$images = json_decode($article->images);
+							if (isset($images->image_intro) and !empty($images->image_intro)) : ?>
+								<div class="introimage">
+									<?php $imgfloat = (empty($images->float_intro)) ? $params->get('float_intro') : $images->float_intro; ?>
+									<div class="img-intro-<?php echo htmlspecialchars($imgfloat); ?>">
+									<img
+											<?php if ($images->image_intro_caption):
+												echo 'class="caption"'.' title="' .htmlspecialchars($images->image_intro_caption) .'"';
+											endif; ?>
+											src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>"/>
+									</div>
+								</div>			
+						<?php endif; ?>
+					<?php endif; ?>
+					<?php if($params->get('introtextlimit') == 0) : 
+							 echo $article->introtext; ?> </div>
+					<?php else: 
+							$limitCount = intval($params->get('introtextlimitcount'));
+							if($limitCount < 0)
+								$limitCount = 0;
+							
+							// Limits the $introtext by word count
+							// BUG: Issues 4 and 5
+							if($params->get('introtextlimit') == 1) {
 								
-								// Limits the $introtext by word count
-								if($params->get('introtextlimit') == 1) {
-									$introtext = explode(" ", $article->introtext, $limitCount + 1);
-									array_pop($introtext);
-									$introtext = implode(" ", $introtext);
+								// The limit exceeds the word count
+								$totalWordCount = str_word_count(strip_tags($article->introtext));
+								if($totalWordCount <= $limitCount)
+									echo $article->introtext;
+								else {
+																	
+									// Find the position of the $limitCount word, so it can be used in modRandomArticleHelper::substr_HTML()
+									$newLimit = modRandomArticleHelper::strposnth(strip_tags($article->introtext), " ", $limitCount);
+									echo $newLimit;
+									$introtext = modRandomArticleHelper::substr_HTML($newLimit, $article->introtext);
 									echo $introtext;
 								}
+							}
+							
+							// Limits the $introtext by character count
+							elseif($params->get('introtextlimit') == 2) {
+								// Old function to be used if the new function doesn't work. 
+								//$introtext = substr($article->introtext, 0, $limitCount);
 								
-								// Limits the $introtext by character count
-								elseif($params->get('introtextlimit') == 2) {
-									// Old function to be used if the new function doesn't work. 
-									//$introtext = substr($article->introtext, 0, $limitCount);
-									
-									// New function to ignore HTML tags when limiting the introtext.						
-									$introtext = modRandomArticleHelper::substr_HTML($limitCount, $article->introtext);
-									
-									echo $introtext;
-								}										
-							?>
-						</div>
+								// New function to ignore HTML tags when limiting the introtext.						
+								$introtext = modRandomArticleHelper::substr_HTML($limitCount, $article->introtext);
+								
+								echo $introtext;
+							}										
+						?>
 					<?php endif; ?>
+					</div>
 				<?php endif; ?>
 				
 				<?php if($params->get('readmore')) : ?>
@@ -72,12 +113,38 @@ defined('_JEXEC') or die('Restricted access');
 				<?php endif; ?>
 					
 				<?php if($params->get('fulltext')) : ?>
-					<div class="fulltext"> <?php echo $article->fulltext; ?> </div>
+					<div class="fulltext"> 
+					<?php if($params->get('fullarticleimage')) : 
+						
+							// Copied this code from componentes/com_content/views/article/tmpl/default.php  
+							if (isset($images->image_fulltext) and !empty($images->image_fulltext)) : ?>
+							<div class="fullarticleimage">
+								<?php $imgfloat = (empty($images->float_fulltext)) ? $params->get('float_fulltext') : $images->float_fulltext; ?>
+								<div class="img-fulltext-<?php echo htmlspecialchars($imgfloat); ?>">
+								<img
+								        <?php if ($images->image_fulltext_caption):
+								                echo 'class="caption"'.' title="' .htmlspecialchars($images->image_fulltext_caption) .'"';
+								        endif; ?>
+								        src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo htmlspecialchars($images->image_fulltext_alt); ?>"/>
+								</div>
+							</div>
+							<?php endif; ?>	
+					<?php endif; ?>
+					<?php echo $article->fulltext; ?> 
+					</div>
 				<?php endif; ?>
-			</div>
+			<?php if($html5) : ?>
+				</article>
+			<?php else: ?>
+				</div>
+			<?php endif; ?>
 			<?php 
 			$i++;	
 		} 
 	}
 	?>	
-</div>
+<?php if($html5) : ?>
+	</section>
+<?php else: ?>
+	</div>
+<?php endif; ?>
