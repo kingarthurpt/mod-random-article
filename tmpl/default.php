@@ -8,16 +8,17 @@
 **/
 
 // no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
+defined('_JEXEC') or die('Restricted access');
 ?>
 
 <div class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
 
 	<?php
 	// Shows an error if the user didn't select any category
-	if($articles <= 0)
-		echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_1');
+	if($articles <= 0) {
+		if($articles == -2)
+			echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_1');
+	}
 	else {
 		$i = 0;
 		foreach($articles as $article) { ?>
@@ -43,14 +44,22 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 								if($limitCount < 0)
 									$limitCount = 0;
 								
+								// Limits the $introtext by word count
 								if($params->get('introtextlimit') == 1) {
 									$introtext = explode(" ", $article->introtext, $limitCount + 1);
 									array_pop($introtext);
 									$introtext = implode(" ", $introtext);
 									echo $introtext;
 								}
+								
+								// Limits the $introtext by character count
 								elseif($params->get('introtextlimit') == 2) {
-									$introtext = substr($article->introtext, 0, $limitCount);
+									// Old function to be used if the new function doesn't work. 
+									//$introtext = substr($article->introtext, 0, $limitCount);
+									
+									// New function to ignore HTML tags when limiting the introtext.						
+									$introtext = modRandomArticleHelper::substr_HTML($limitCount, $article->introtext);
+									
 									echo $introtext;
 								}										
 							?>
