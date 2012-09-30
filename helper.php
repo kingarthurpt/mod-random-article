@@ -16,6 +16,8 @@ class modRandomArticleHelper {
 		
 		// Converts numberArticles to a number.
 		$numberArticles = intval($params->get('numberArticles'));
+		if($numberArticles < 0)
+			return -3;
 		 
 		// Checks if there is any selected category.
 		if(count($params->get('category')) <= 0)

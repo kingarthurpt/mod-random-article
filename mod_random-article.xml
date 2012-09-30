@@ -5,9 +5,12 @@
 	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
 	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
-	<creationDate>September 2012</creationDate>
-	<version>1.1</version>
-	<description>A simple module that displays a random article.</description>
+	<creationDate>September 30th, 2012</creationDate>
+	<version>1.2</version>
+	<description>
+		This simple module displays random articles.
+		For more information, please visit http://code.google.com/p/mod-random-article/ 
+	</description>
 	<files>
 		<filename>mod_random-article.xml</filename>
 		<filename module="mod_random-article">mod_random-article.php</filename>

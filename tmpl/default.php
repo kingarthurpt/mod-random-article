@@ -27,6 +27,8 @@ else
 	if($articles <= 0) {
 		if($articles == -2)
 			echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_1');
+		if($articles == -3)
+			echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_2');
 	}
 	else {
 		
@@ -51,26 +53,26 @@ else
 				
 				<?php if($params->get('introtext')) : ?>
 					<div class="introtext">
-					<?php if($params->get('introtextimage')) : 
-													
-							// Copied this code from componentes/com_content/views/category/tmpl/blog_item.php
-							$images = json_decode($article->images);
-							if (isset($images->image_intro) and !empty($images->image_intro)) : ?>
-								<div class="introimage">
-									<?php $imgfloat = (empty($images->float_intro)) ? $params->get('float_intro') : $images->float_intro; ?>
-									<div class="img-intro-<?php echo htmlspecialchars($imgfloat); ?>">
-									<img
-											<?php if ($images->image_intro_caption):
-												echo 'class="caption"'.' title="' .htmlspecialchars($images->image_intro_caption) .'"';
-											endif; ?>
-											src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>"/>
-									</div>
-								</div>			
+						<?php if($params->get('introtextimage')) : 
+														
+								// Copied this code from componentes/com_content/views/category/tmpl/blog_item.php
+								$images = json_decode($article->images);
+								if (isset($images->image_intro) and !empty($images->image_intro)) : ?>
+									<div class="introimage">
+										<?php $imgfloat = (empty($images->float_intro)) ? $params->get('float_intro') : $images->float_intro; ?>
+										<div class="img-intro-<?php echo htmlspecialchars($imgfloat); ?>">
+										<img
+												<?php if ($images->image_intro_caption):
+															echo 'class="caption"'.' title="' .htmlspecialchars($images->image_intro_caption) .'"';
+													endif; ?>
+												src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>"/>
+										</div>
+									</div>			
+								<?php endif; ?>
 						<?php endif; ?>
-					<?php endif; ?>
 					<?php if($params->get('introtextlimit') == 0) : 
-							 echo $article->introtext; ?> </div>
-					<?php else: 
+							 echo $article->introtext; 
+						else: 
 							$limitCount = intval($params->get('introtextlimitcount'));
 							if($limitCount < 0)
 								$limitCount = 0;
@@ -87,7 +89,6 @@ else
 																	
 									// Find the position of the $limitCount word, so it can be used in modRandomArticleHelper::substr_HTML()
 									$newLimit = modRandomArticleHelper::strposnth(strip_tags($article->introtext), " ", $limitCount);
-									echo $newLimit;
 									$introtext = modRandomArticleHelper::substr_HTML($newLimit, $article->introtext);
 									echo $introtext;
 								}
@@ -114,23 +115,24 @@ else
 					
 				<?php if($params->get('fulltext')) : ?>
 					<div class="fulltext"> 
-					<?php if($params->get('fullarticleimage')) : 
-						
-							// Copied this code from componentes/com_content/views/article/tmpl/default.php  
-							if (isset($images->image_fulltext) and !empty($images->image_fulltext)) : ?>
-							<div class="fullarticleimage">
-								<?php $imgfloat = (empty($images->float_fulltext)) ? $params->get('float_fulltext') : $images->float_fulltext; ?>
-								<div class="img-fulltext-<?php echo htmlspecialchars($imgfloat); ?>">
-								<img
-								        <?php if ($images->image_fulltext_caption):
-								                echo 'class="caption"'.' title="' .htmlspecialchars($images->image_fulltext_caption) .'"';
-								        endif; ?>
-								        src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo htmlspecialchars($images->image_fulltext_alt); ?>"/>
+						<?php if($params->get('fullarticleimage')) : 
+							
+								// Copied this code from componentes/com_content/views/article/tmpl/default.php
+								$images = json_decode($article->images);  
+								if (isset($images->image_fulltext) and !empty($images->image_fulltext)) : ?>
+								<div class="fullarticleimage">
+									<?php $imgfloat = (empty($images->float_fulltext)) ? $params->get('float_fulltext') : $images->float_fulltext; ?>
+									<div class="img-fulltext-<?php echo htmlspecialchars($imgfloat); ?>">
+									<img
+									        <?php if ($images->image_fulltext_caption):
+									                echo 'class="caption"'.' title="' .htmlspecialchars($images->image_fulltext_caption) .'"';
+									        	endif; ?>
+									        src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo htmlspecialchars($images->image_fulltext_alt); ?>"/>
+									</div>
 								</div>
-							</div>
-							<?php endif; ?>	
-					<?php endif; ?>
-					<?php echo $article->fulltext; ?> 
+								<?php endif; ?>	
+						<?php endif; ?>
+						<?php echo $article->fulltext; ?> 
 					</div>
 				<?php endif; ?>
 			<?php if($html5) : ?>
