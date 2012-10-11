@@ -110,7 +110,7 @@ else
 				<?php endif; ?>
 				
 				<?php if($params->get('readmore')) : ?>
-					<div class="readmore"><a href="<?php echo $urls[$i]; ?>"> <?php echo JText::sprintf('COM_CONTENT_READ_MORE_TITLE'); ?> </a></div>
+					<div class="readmore"><a href="<?php echo $urls[$i]; ?>"> <?php echo JText::sprintf('MOD_RANDOM_ARTICLE_READMORE'); ?> </a></div>
 				<?php endif; ?>
 					
 				<?php if($params->get('fulltext')) : ?>
