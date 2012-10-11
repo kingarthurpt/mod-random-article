@@ -78,11 +78,10 @@ else
 								$limitCount = 0;
 							
 							// Limits the $introtext by word count
-							// BUG: Issues 4 and 5
 							if($params->get('introtextlimit') == 1) {
 								
 								// The limit exceeds the word count
-								$totalWordCount = str_word_count(strip_tags($article->introtext));
+								$totalWordCount = str_word_count(strip_tags($article->introtext), 0, "0123456789");
 								if($totalWordCount <= $limitCount)
 									echo $article->introtext;
 								else {
@@ -90,19 +89,29 @@ else
 									// Find the position of the $limitCount word, so it can be used in modRandomArticleHelper::substr_HTML()
 									$newLimit = modRandomArticleHelper::strposnth(strip_tags($article->introtext), " ", $limitCount);
 									$introtext = modRandomArticleHelper::substr_HTML($newLimit, $article->introtext);
-									echo $introtext;
+									echo $introtext . "...";
 								}
 							}
 							
 							// Limits the $introtext by character count
 							elseif($params->get('introtextlimit') == 2) {
-								// Old function to be used if the new function doesn't work. 
-								//$introtext = substr($article->introtext, 0, $limitCount);
 								
-								// New function to ignore HTML tags when limiting the introtext.						
-								$introtext = modRandomArticleHelper::substr_HTML($limitCount, $article->introtext);
 								
-								echo $introtext;
+								// The limit exceeds the character count
+								$totalCharCount = strlen(strip_tags($article->introtext));
+								echo $totalCharCount;
+								if($totalCharCount <= $limitCount)
+									echo $article->introtext;
+								else {
+
+									// Old function to be used if the new function doesn't work. 
+									//$introtext = substr($article->introtext, 0, $limitCount);
+									
+									// New function to ignore HTML tags when limiting the introtext.						
+									$introtext = modRandomArticleHelper::substr_HTML($limitCount, $article->introtext);
+									
+									echo $introtext . "...";
+								}
 							}										
 						?>
 					<?php endif; ?>
