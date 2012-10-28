@@ -31,6 +31,13 @@ else
 			echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_2');
 	}
 	else {
+					
+		// Shows a warning if the user didn't select the proper settings
+		if($params->get('warnings')) {
+			// Nothing is displayed
+			if(!$params->get('title') && !$params->get('introtext') && !$params->get('introtextimage') && !$params->get('readmore') && !$params->get('fulltext') && !$params->get('fullarticleimage'))
+				echo JText::sprintf('MOD_RANDOM_ARTICLE_WARNING_1');
+		}
 		
 		$i = 0;
 		foreach($articles as $article) { ?>
@@ -40,6 +47,16 @@ else
 			<?php else: ?>
 				<div class="random-article">
 			<?php endif; ?>
+			
+				<?php
+					// Shows a warning if the user didn't select the proper settings
+					if($params->get('warnings')) {
+						// Displaying Fulltext in an article without the readmore separator			
+						if(!$params->get('introtext') && $params->get('fulltext'))
+							if($article->introtext != null && $article->fulltext == null)
+								echo JText::sprintf('MOD_RANDOM_ARTICLE_WARNING_2');
+					}
+				?>			
 			
 				<?php if($params->get('title')) : ?>
 					<div class="title">
@@ -54,7 +71,7 @@ else
 				<?php if($params->get('introtext')) : ?>
 					<div class="introtext">
 						<?php if($params->get('introtextimage')) : 
-														
+
 								// Copied this code from componentes/com_content/views/category/tmpl/blog_item.php
 								$images = json_decode($article->images);
 								if (isset($images->image_intro) and !empty($images->image_intro)) : ?>

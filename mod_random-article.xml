@@ -5,8 +5,8 @@
 	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
 	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
-	<creationDate>September 30th, 2012</creationDate>
-	<version>1.2</version>
+	<creationDate>October 27th, 2012</creationDate>
+	<version>1.2.1</version>
 	<description>
 		This simple module displays random articles.
 		For more information, please visit http://code.google.com/p/mod-random-article/ 
@@ -102,17 +102,23 @@
 
 				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
 				
-				<field
-					name="cachemode"
-					type="hidden"
-					default="static">
-					<option
-						value="static"></option>
+				<field name="cachemode" type="hidden" default="static">
+					<option value="static"></option>
 				</field>
 				
 				<field type="spacer" hr="true" />
 				
 				<field name="html5" type="radio" default="0" label="MOD_RANDOM_ARTICLE_HTML5_LABEL" description="MOD_RANDOM_ARTICLE_HTML5_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+			<fieldset name="MOD_RANDOM_ARTICLE_DEBUG">
+				<field name="warnings" type="radio" default="0" label="MOD_RANDOM_ARTICLE_DEBUG_WARNINGS_LABEL" description="MOD_RANDOM_ARTICLE_DEBUG_WARNINGS_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="timerestrictions" type="radio" default="0" label="MOD_RANDOM_ARTICLE_DEBUG_TIME_LABEL" description="MOD_RANDOM_ARTICLE_DEBUG_TIME_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>

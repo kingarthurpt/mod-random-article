@@ -30,27 +30,25 @@ class modRandomArticleHelper {
 		date_default_timezone_set ($app->getCfg('offset'));
  
 		//  The selected articles are published and have valid publish and unpublish dates
-		if($params->get('subcategories'))
-			$query = "SELECT * ".
-						"FROM #__content ".
-						"WHERE catid in ".
-							"( SELECT id ".
-								"FROM #__categories ".
-								"WHERE parent_id in (".$categories.") OR id in (" .$categories .") ) ".
-							"AND state = '1' ".
-							"AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
-							"AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ".
-						"ORDER BY RAND() ".
-						"LIMIT ".$numberArticles;
-		else		
-			$query = "SELECT * ".
-						"FROM #__content ".
-						"WHERE catid in (". $categories . ") ".
-							"AND state = '1' ".
-							"AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
-							"AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ".
-						"ORDER BY RAND() ".
-						"LIMIT ".$numberArticles;
+		$query = "SELECT * ".
+					"FROM #__content ".
+					"WHERE catid in ";
+										
+					// Selects articles from the subcategories. 
+					if($params->get('subcategories'))
+						$query .= "( SELECT id FROM #__categories WHERE parent_id in (".$categories.") OR id in (" .$categories .") )";
+					else
+						$query .= "( ".$categories." ) ";
+						
+		$query .= "AND state = '1' ";
+		
+					// Disables time restrictions and selects articles without checking if the dates are correct.
+					if(!$params->get('timerestrictions'))
+						$query .= "AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
+									"AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ";
+									
+		$query .= 	"ORDER BY RAND() ".
+					"LIMIT ".$numberArticles;
 
 		$db =& JFactory::getDBO();
 		$db->setQuery($query);
