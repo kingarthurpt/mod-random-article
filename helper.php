@@ -25,6 +25,9 @@ class modRandomArticleHelper {
 		
 		$categories = implode(",", $params->get('category'));
 		
+		// Sets the timezone to match the Joomla configuration file
+		$app =& JFactory::getApplication();
+		date_default_timezone_set ($app->getCfg('offset'));
  
 		//  The selected articles are published and have valid publish and unpublish dates
 		if($params->get('subcategories'))
