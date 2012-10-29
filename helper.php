@@ -197,5 +197,30 @@ class modRandomArticleHelper {
 		//return the number
 		return $pos;
 	}
+	
+	/**
+	 * Writes a detailed log file to be used in bug report
+	 * @param $opt the type of output to be logged: 1=settings 2=article 3=url 4=html
+	 * @param $data the output to be logged
+	 */
+	function logThis($opt = 1, $data = "") {
+		$filename = "tmp".DS."mod_random-article-debuglogfile.txt";
+		$timestamp = "Timestamp: ".date('Y-m-d H:i:s') . "\n";
+		$log = "";
+		
+		if($opt == 1)
+			$log = "LOG TYPE: MODULE SETTINGS\n" . $timestamp . $data . "\n\n";
+		elseif($opt == 2)
+			$log = "LOG TYPE: ARTICLE\n" . $data . "\n\n";
+		elseif($opt == 3)
+			$log = "LOG TYPE: URL\n" . $data . "\n\n";
+			
+		// This might be useful later
+		elseif($opt == 4)
+			$log = "LOG TYPE: HTML\n" . $data . "\n\n";
+			
+		file_put_contents($filename, $log, FILE_APPEND | LOCK_EX);
+		chmod($filename, 0775);
+	}
 }
 ?>

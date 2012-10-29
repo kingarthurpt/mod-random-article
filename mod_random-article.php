@@ -19,14 +19,24 @@ require_once(dirname(__FILE__).DS.'helper.php');
 $language = JFactory::getLanguage();
 $language->load('mod_random-article');
 
+if($params->get('logfile'))
+	modRandomArticleHelper::logThis(1, print_r($params, true));
+
+
 $articles = modRandomArticleHelper::getArticles($params);
 if($articles > 0) { 
 	$i = 0;
 	foreach($articles as $article) {
 		$urls[$i] = modRandomArticleHelper::getUrl($article);
+		
+		if($params->get('logfile')) {
+			modRandomArticleHelper::logThis(2, print_r($article, true));
+			modRandomArticleHelper::logThis(3, print_r($urls[$i], true));
+		}
+		
 		$i++;
 	}
 }
 
-require(JModuleHelper::getLayoutPath('mod_random-article')); 
+require(JModuleHelper::getLayoutPath('mod_random-article'));
 ?>
