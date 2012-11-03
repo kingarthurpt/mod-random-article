@@ -116,7 +116,7 @@ else
 								
 								// The limit exceeds the character count
 								$totalCharCount = strlen(strip_tags($article->introtext));
-								echo $totalCharCount;
+								
 								if($totalCharCount <= $limitCount)
 									echo $article->introtext;
 								else {

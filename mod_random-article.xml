@@ -38,6 +38,11 @@
 					<option value="1">JYES</option>
 				</field>
 				
+				<field name="numberArticles" type="text" default="1" label="MOD_RANDOM_ARTICLE_NUMBERARTICLES_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERARTICLES_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				
 				<field name="categoryk2" type="categoryk2" multiple="true" label="MOD_RANDOM_ARTICLE_CATEGORYK2_LABEL" description="MOD_RANDOM_ARTICLE_CATEGORYK2_DESC"/>
 				
 				<field name="subcategoriesk2" type="radio" default="1" label="MOD_RANDOM_ARTICLE_SUBCATEGORIES_LABEL" description="MOD_RANDOM_ARTICLE_SUBCATEGORIES_DESC">
@@ -45,7 +50,7 @@
 					<option value="1">JYES</option>
 				</field>
 				
-				<field name="numberArticles" type="text" default="1" label="MOD_RANDOM_ARTICLE_NUMBERARTICLES_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERARTICLES_DESC">
+				<field name="numberArticlesK2" type="text" default="1" label="MOD_RANDOM_ARTICLE_NUMBERARTICLES_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERARTICLES_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>

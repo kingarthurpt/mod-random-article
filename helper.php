@@ -20,45 +20,78 @@ class modRandomArticleHelper {
 		
 		// Converts numberArticles to a number.
 		$numberArticles = intval($params->get('numberArticles'));
-		if($numberArticles < 0)
+		$numberArticlesK2 = intval($params->get('numberArticlesK2'));
+		if($numberArticles < 0 || $numberArticlesK2 < 0)
 			return -3;
 		 
 		// Checks if there is any selected category.
-		if(count($params->get('category')) <= 0)
+		if(count($params->get('category')) <= 0 && count($params->get('categoryk2')) <= 0)
 			return -2;
 		
 		$categories = implode(",", $params->get('category'));
+		$k2categories = implode(",", $params->get('categoryk2'));
 		
 		// Sets the timezone to match the Joomla configuration file
 		$app =& JFactory::getApplication();
 		date_default_timezone_set ($app->getCfg('offset'));
  
-		//  The selected articles are published and have valid publish and unpublish dates
-		$query = "SELECT * ".
-					"FROM #__content ".
-					"WHERE catid in ";
+ 		if(count($params->get('category')) > 0) {
+			//  The selected articles are published and have valid publish and unpublish dates
+			$query = "SELECT *, 'Joomla' as type ".
+						"FROM #__content ".
+						"WHERE catid in ";
+											
+						// Selects articles from the subcategories. 
+						if($params->get('subcategories'))
+							$query .= "( SELECT id FROM #__categories WHERE parent_id in (".$categories.") OR id in (" .$categories .") )";
+						else
+							$query .= "( ".$categories." ) ";
+							
+			$query .= "AND state = '1' ";
+			
+						// Disables time restrictions and selects articles without checking if the dates are correct.
+						if(!$params->get('timerestrictions'))
+							$query .= "AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
+										"AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ";
 										
-					// Selects articles from the subcategories. 
-					if($params->get('subcategories'))
-						$query .= "( SELECT id FROM #__categories WHERE parent_id in (".$categories.") OR id in (" .$categories .") )";
-					else
-						$query .= "( ".$categories." ) ";
+			$query .= 	"ORDER BY RAND() ".
+						"LIMIT ".$numberArticles;
 						
-		$query .= "AND state = '1' ";
+			$db =& JFactory::getDBO();
+			$db->setQuery($query);
+			$rows = $db->loadObjectList();			
+			
+		}
 		
-					// Disables time restrictions and selects articles without checking if the dates are correct.
-					if(!$params->get('timerestrictions'))
-						$query .= "AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
-									"AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ";
-									
-		$query .= 	"ORDER BY RAND() ".
-					"LIMIT ".$numberArticles;
+		if(count($params->get('categoryk2')) > 0) {
+			//  The selected articles are published and have valid publish and unpublish dates
+			$query = "SELECT *, 'K2' as type ".
+						"FROM #__k2_items ".
+						"WHERE catid in ";
+											
+						// Selects articles from the subcategories. 
+						if($params->get('subcategoriesk2'))
+							$query .= "( SELECT id FROM #__k2_categories WHERE parent in (".$k2categories.") OR id in (" .$k2categories .") )";
+						else
+							$query .= "( ".$k2categories." ) ";
+							
+			$query .= "AND published = '1' ";
+			
+						// Disables time restrictions and selects articles without checking if the dates are correct.
+						if(!$params->get('timerestrictions'))
+							$query .= "AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
+										"AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ";
+										
+			$query .= 	"ORDER BY RAND() ".
+						"LIMIT ".$numberArticlesK2;
 
-		$db =& JFactory::getDBO();
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
+			$db =& JFactory::getDBO();
+			$db->setQuery($query);
+			$k2rows = $db->loadObjectList();
+			
+		}
 
-		return $rows;
+		return array_merge($rows, $k2rows);
 	}
    
 	/**
@@ -67,21 +100,33 @@ class modRandomArticleHelper {
 	 */   
 	function getUrl( &$article ) {
 		$id = $article->id;
-		$link = "index.php?option=com_content&view=article&id=".$id;
+		
+		if($article->type == 'Joomla') {
+			$link = "index.php?option=com_content&view=article&id=".$id;
 
-		// Checks if there is a menu item linked to $article and applies its ItemID to the URL. 
-		$query = "SELECT * FROM #__menu WHERE link = '". $link ."'";
-   	
-		$db =& JFactory::getDBO();
-		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-   	
-		if(isset($rows[0]))
-			$url = $link . "&Itemid=" .$rows[0]->id;
-		else
-			$url = $link;
-   	
-		return $url;
+			// Checks if there is a menu item linked to $article and applies its ItemID to the URL. 
+			$query = "SELECT * FROM #__menu WHERE link = '". $link ."'";
+	   	
+			$db =& JFactory::getDBO();
+			$db->setQuery($query);
+			$rows = $db->loadObjectList();
+	   	
+			if(isset($rows[0]))
+				$url = $link . "&Itemid=" .$rows[0]->id;
+			else
+				$url = $link;
+				
+			return $url;
+		}
+		
+		// Possible bug here. This $link may need the &Itemid to work properly
+		elseif($article->type == 'K2') {
+			// Copied from mod_k2_content - helper.php - readmode link
+			require_once (JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'route.php');
+			$link = urldecode(JRoute::_(K2HelperRoute::getItemRoute($article->id.':'.urlencode($article->alias), $article->catid.':'.urlencode($article->categoryalias))));
+			
+			return $link;
+		}
 	}
 	
 	/**
