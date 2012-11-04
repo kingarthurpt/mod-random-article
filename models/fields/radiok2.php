@@ -9,18 +9,18 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
- 
-jimport('joomla.form.formfield');
+
+jimport('joomla.form.fields.radio');
  
 // The class name must always be the same as the filename (in camel case)
-class JFormFieldCategoryK2 extends JFormFieldList {
+class JFormFieldRadioK2 extends JFormFieldRadio {
+	
+		private $k2Installed;
  
- 		private $k2Installed;
- 		
         //The field class must know its own type through the variable $type.
-        protected $type = 'categoryk2';
- 
- 		public function __construct() {
+        protected $type = 'radiok2';
+        
+        public function __construct() {
         	$this->hasK2Installed();
         	parent::__construct();	
         }
@@ -37,33 +37,20 @@ class JFormFieldCategoryK2 extends JFormFieldList {
 			else
 				$this->k2Installed = false;	
         }
-        
+
         public function getLabel() {
-			// code that returns HTML that will be shown as the label
-         	if($this->k2Installed)
-            	return parent::getLabel();
+                // code that returns HTML that will be shown as the label
+                if($this->k2Installed)
+                	return parent::getLabel();
         }
- 
+
         public function getInput() {
-			// code that returns HTML that will be shown as the form field
-			if($this->k2Installed)
-				return parent::getInput();
+                // code that returns HTML that will be shown as the form field
+                if($this->k2Installed)
+                	return parent::getInput();
         }
         
         protected function getOptions () {
-        	// Initialise variables.
-			$options = array();
-			
-			if($this->k2Installed) {
-				$query = "SELECT * FROM #__k2_categories;";
-				$db =& JFactory::getDBO();
-				$db->setQuery($query);
-				$rows = $db->loadObjectList();
-			
-				foreach ($rows as $category) {
-					$options[$category->id] = $category->name;	
-				}
-			}
-			return $options;
-        }
+        	return parent::getOptions();
+		}
 }
