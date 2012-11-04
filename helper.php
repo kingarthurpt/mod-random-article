@@ -21,21 +21,24 @@ class modRandomArticleHelper {
 		// Converts numberArticles to a number.
 		$numberArticles = intval($params->get('numberArticles'));
 		$numberArticlesK2 = intval($params->get('numberArticlesK2'));
-		if($numberArticles < 0 || $numberArticlesK2 < 0)
+		if($numberArticles < 0 || $numberArticlesK2 < 0 || ($numberArticlesK2 <= 0 && $numberArticles <= 0))
 			return -3;
 		 
 		// Checks if there is any selected category.
 		if(count($params->get('category')) <= 0 && count($params->get('categoryk2')) <= 0)
 			return -2;
 		
-		$categories = implode(",", $params->get('category'));
-		$k2categories = implode(",", $params->get('categoryk2'));
+		if($params->get('category'))
+			$categories = implode(",", $params->get('category'));
+		
+		if($params->get('categoryk2'))
+			$k2categories = implode(",", $params->get('categoryk2'));
 		
 		// Sets the timezone to match the Joomla configuration file
 		$app =& JFactory::getApplication();
 		date_default_timezone_set ($app->getCfg('offset'));
  
- 		if(count($params->get('category')) > 0) {
+  		if(count($params->get('category')) > 0) {
 			//  The selected articles are published and have valid publish and unpublish dates
 			$query = "SELECT *, 'Joomla' as type ".
 						"FROM #__content ".
@@ -63,7 +66,7 @@ class modRandomArticleHelper {
 			
 		}
 		
-		if(count($params->get('categoryk2')) > 0) {
+		if($params->get('categoryk2') && count($params->get('categoryk2')) > 0) {
 			//  The selected articles are published and have valid publish and unpublish dates
 			$query = "SELECT *, 'K2' as type ".
 						"FROM #__k2_items ".
@@ -90,7 +93,12 @@ class modRandomArticleHelper {
 			$k2rows = $db->loadObjectList();
 			
 		}
-
+		
+		if(!is_array($rows))
+			return $k2rows;
+		if(!is_array($k2rows))
+			return $rows;
+			
 		return array_merge($rows, $k2rows);
 	}
    
