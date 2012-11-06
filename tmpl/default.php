@@ -43,9 +43,9 @@ else
 		foreach($articles as $article) { ?>
 			
 			<?php if($html5) : ?>
-				<article class="random-article">
+				<article class="random-article <?php if($article->type == "K2") echo "random-k2-article"; ?> ">
 			<?php else: ?>
-				<div class="random-article">
+				<div class="random-article <?php if($article->type == "K2") echo "random-k2-article"; ?>">
 			<?php endif; ?>
 			
 				<?php
