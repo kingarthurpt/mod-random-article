@@ -27,7 +27,7 @@ class JFormFieldTextK2 extends JFormFieldText {
         
         private function hasK2Installed() {
         	$query = "SELECT * FROM #__extensions WHERE element = 'com_k2' AND type='component' AND enabled = '1';";
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$db->setQuery($query);
 			$k2 = $db->loadObjectList();
 			

@@ -70,7 +70,7 @@ else
 				
 				<?php if($params->get('introtext')) : ?>
 					<div class="introtext">
-						<?php if($params->get('introtextimage')) : 
+						<?php if($params->get('introtextimage') && $article->type != "K2") : 
 
 								// Copied this code from componentes/com_content/views/category/tmpl/blog_item.php
 								$images = json_decode($article->images);
@@ -141,7 +141,7 @@ else
 					
 				<?php if($params->get('fulltext')) : ?>
 					<div class="fulltext"> 
-						<?php if($params->get('fullarticleimage')) : 
+						<?php if($params->get('fullarticleimage')  && $article->type != "K2") : 
 							
 								// Copied this code from componentes/com_content/views/article/tmpl/default.php
 								$images = json_decode($article->images);  

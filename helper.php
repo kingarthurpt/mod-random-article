@@ -16,7 +16,7 @@ class modRandomArticleHelper {
 	 * Picks $numberArticles random articles from the chosen categories.
 	 * @return Array $rows On success returns an array with the random articles, otherwise returns -1
 	 */	
-	function getArticles( &$params ) {
+	public static function getArticles( &$params ) {
 		
 		// Converts numberArticles to a number.
 		$numberArticles = intval($params->get('numberArticles'));
@@ -35,7 +35,7 @@ class modRandomArticleHelper {
 			$k2categories = implode(",", $params->get('categoryk2'));
 		
 		// Sets the timezone to match the Joomla configuration file
-		$app =& JFactory::getApplication();
+		$app = JFactory::getApplication();
 		date_default_timezone_set ($app->getCfg('offset'));
  
   		if(count($params->get('category')) > 0) {
@@ -60,7 +60,7 @@ class modRandomArticleHelper {
 			$query .= 	"ORDER BY RAND() ".
 						"LIMIT ".$numberArticles;
 						
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();			
 			
@@ -68,27 +68,28 @@ class modRandomArticleHelper {
 		
 		if($params->get('categoryk2') && count($params->get('categoryk2')) > 0) {
 			//  The selected articles are published and have valid publish and unpublish dates
-			$query = "SELECT *, 'K2' as type ".
-						"FROM #__k2_items ".
+			$query = "SELECT i.*, 'K2' as type, c.alias as categoryalias ".
+						"FROM #__k2_items as i ".
+						"LEFT JOIN #__k2_categories c ON c.id = i.catid ".
 						"WHERE catid in ";
 											
 						// Selects articles from the subcategories. 
 						if($params->get('subcategoriesk2'))
-							$query .= "( SELECT id FROM #__k2_categories WHERE parent in (".$k2categories.") OR id in (" .$k2categories .") )";
+							$query .= "( SELECT id FROM #__k2_categories WHERE parent in (".$k2categories.") OR id in (" .$k2categories .") ) ";
 						else
 							$query .= "( ".$k2categories." ) ";
 							
-			$query .= "AND published = '1' ";
+			$query .= "AND i.published = '1' ";
 			
 						// Disables time restrictions and selects articles without checking if the dates are correct.
 						if(!$params->get('timerestrictions'))
-							$query .= "AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
-										"AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ";
+							$query .= "AND (i.publish_up <= '".date('Y-m-d H:i:s')."' OR i.publish_up = '0000-00-00 00:00:00') ".
+										"AND (i.publish_down >= '".date('Y-m-d H:i:s')."' OR i.publish_down = '0000-00-00 00:00:00') ";
 										
 			$query .= 	"ORDER BY RAND() ".
 						"LIMIT ".$numberArticlesK2;
 
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$db->setQuery($query);
 			$k2rows = $db->loadObjectList();
 			
@@ -106,7 +107,7 @@ class modRandomArticleHelper {
 	 * Gets the correct URL for a given $article.
 	 * @return String $url The URL to the $article 
 	 */   
-	function getUrl( &$article ) {
+	public static function getUrl( &$article ) {
 		$id = $article->id;
 		
 		if($article->type == 'Joomla') {
@@ -115,7 +116,7 @@ class modRandomArticleHelper {
 			// Checks if there is a menu item linked to $article and applies its ItemID to the URL. 
 			$query = "SELECT * FROM #__menu WHERE link = '". $link ."'";
 	   	
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$db->setQuery($query);
 			$rows = $db->loadObjectList();
 	   	
@@ -146,7 +147,7 @@ class modRandomArticleHelper {
 	 * @param $html The String to be cutted
 	 * @return String $str A substring of $html that still is a valid HTML String 
 	 */
-	function substr_HTML($maxLength, $html, $isUtf8=true) {
+	public static function substr_HTML($maxLength, $html, $isUtf8=true) {
 		$printedLength = 0;
 		$position = 0;
 		$tags = array();
@@ -222,7 +223,7 @@ class modRandomArticleHelper {
 	 * Thanks for webKami for sharing this function
 	 * http://www.webkami.com/programming/php/php-function-str-nth-pos/php-function-str-nth-pos-1-0-0.php
 	 */
-	function strposnth($haystack, $needle, $nth=1, $insenstive=0) {
+	public static function strposnth($haystack, $needle, $nth=1, $insenstive=0) {
 		//if its case insenstive, convert strings into lower case
 		if ($insenstive) {
 			$haystack=strtolower($haystack);
@@ -260,7 +261,7 @@ class modRandomArticleHelper {
 	 * @param $opt the type of output to be logged: 1=settings 2=article 3=url 4=html
 	 * @param $data the output to be logged
 	 */
-	function logThis($opt = 1, $data = "") {
+	public static function logThis($opt = 1, $data = "") {
 		$filename = "tmp".DS."mod_random-article-debuglogfile.txt";
 		$timestamp = "Timestamp: ".date('Y-m-d H:i:s') . "\n";
 		$log = "";

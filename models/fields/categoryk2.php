@@ -27,7 +27,7 @@ class JFormFieldCategoryK2 extends JFormFieldList {
         
         private function hasK2Installed() {
         	$query = "SELECT * FROM #__extensions WHERE element = 'com_k2' AND type='component' AND enabled = '1';";
-			$db =& JFactory::getDBO();
+			$db = JFactory::getDBO();
 			$db->setQuery($query);
 			$k2 = $db->loadObjectList();
 			
@@ -56,7 +56,7 @@ class JFormFieldCategoryK2 extends JFormFieldList {
 			
 			if($this->k2Installed) {
 				$query = "SELECT * FROM #__k2_categories;";
-				$db =& JFactory::getDBO();
+				$db = JFactory::getDBO();
 				$db->setQuery($query);
 				$rows = $db->loadObjectList();
 			
