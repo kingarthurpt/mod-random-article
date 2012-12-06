@@ -25,7 +25,9 @@ class modRandomArticleHelper {
 			return -3;
 		 
 		// Checks if there is any selected category.
-		if(count($params->get('category')) <= 0 && count($params->get('categoryk2')) <= 0)
+		if($numberArticles > 0 && count($params->get('category')) <= 0)
+			return -2;
+		if($numberArticlesK2 > 0 && count($params->get('categoryk2')) <= 0)
 			return -2;
 		
 		if($params->get('category'))
@@ -95,9 +97,9 @@ class modRandomArticleHelper {
 			
 		}
 		
-		if(!is_array($rows))
+		if(!isset($rows))
 			return $k2rows;
-		if(!is_array($k2rows))
+		if(!isset($k2rows))
 			return $rows;
 			
 		return array_merge($rows, $k2rows);
