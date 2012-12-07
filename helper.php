@@ -109,23 +109,34 @@ class modRandomArticleHelper {
 	 * Gets the correct URL for a given $article.
 	 * @return String $url The URL to the $article 
 	 */   
-	public static function getUrl( &$article ) {
+	public static function getUrl( &$article, $addCurrentID) {
 		$id = $article->id;
 		
 		if($article->type == 'Joomla') {
 			$link = "index.php?option=com_content&view=article&id=".$id;
-
-			// Checks if there is a menu item linked to $article and applies its ItemID to the URL. 
-			$query = "SELECT * FROM #__menu WHERE link = '". $link ."'";
-	   	
-			$db = JFactory::getDBO();
-			$db->setQuery($query);
-			$rows = $db->loadObjectList();
-	   	
-			if(isset($rows[0]))
-				$url = $link . "&Itemid=" .$rows[0]->id;
-			else
-				$url = $link;
+			
+			if($addCurrentID) {
+				// Adds the Itemid of the active menu item.
+				$app = JFactory::getApplication();
+				$menu = $app->getMenu();
+				$activeItemid = $menu->getActive()->id;
+				
+				$url = $link . "&Itemid=" . $activeItemid;
+			}
+			
+			else {				
+				// Checks if there is a menu item linked to $article and applies its ItemID to the URL. 
+				$query = "SELECT * FROM #__menu WHERE link = '". $link ."'";
+		   	
+				$db = JFactory::getDBO();
+				$db->setQuery($query);
+				$rows = $db->loadObject();
+		   	
+				if(isset($rows))
+					$url = $link . "&Itemid=" .$rows->id;
+				else
+					$url = $link;
+			}
 				
 			return $url;
 		}
