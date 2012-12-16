@@ -293,5 +293,61 @@ class modRandomArticleHelper {
 		file_put_contents($filename, $log, FILE_APPEND | LOCK_EX);
 		chmod($filename, 0775);
 	}
+	
+	/**
+	 * Gets the path and filename of a K2 article
+	 *
+	 * This code was copied from mod_k2_content - helper.php - class modK2ContentHelper - function getItems()
+	 * and adjusted to fit this module needs
+	 */
+	public static function getK2ArticleImage($item, $size) {
+		$componentParams = JComponentHelper::getParams('com_k2');
+		
+		//Images
+		$date = JFactory::getDate($item->modified);
+		$timestamp = '?t='.$date->toUnix();
+
+		if($size == "XSmall") {
+			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XS.jpg')) {
+				$item->image = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_XS.jpg';
+				if ($componentParams->get('imageTimestamp'))
+					$item->image .= $timestamp;
+			}
+		}
+		
+		elseif($size == "Small") {
+			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_S.jpg')) {
+				$item->image = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_S.jpg';
+				if ($componentParams->get('imageTimestamp'))
+					$item->image .= $timestamp;
+				}
+		}
+
+		elseif($size == "Medium") {
+			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_M.jpg')) {
+				$item->image = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_M.jpg';
+				if ($componentParams->get('imageTimestamp'))
+					$item->image .= $timestamp;
+			}
+		}
+		
+		elseif($size == "Large") {	
+			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_L.jpg')) {
+				$item->image = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg';
+				if ($componentParams->get('imageTimestamp')) 
+					$item->image .= $timestamp;
+			}
+		}
+		
+		elseif($size == "XLarge") {
+			if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XL.jpg')) {
+				$item->image = JURI::base(true).'/media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg';
+				if ($componentParams->get('imageTimestamp'))
+					$item->image .= $timestamp;
+			}
+		}
+				
+		return $item->image;
+	}
 }
 ?>

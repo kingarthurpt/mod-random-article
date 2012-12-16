@@ -6,9 +6,9 @@
 	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
 	<creationDate>November 6th, 2012</creationDate>
-	<version>1.3</version>
+	<version>1.3.0.50</version>
 	<description>
-		This simple module displays random articles.
+		This module displays random articles.
 		For more information, please visit http://code.google.com/p/mod-random-article/ 
 	</description>
 	<files>
@@ -85,6 +85,14 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+				
+				<field name="k2imagesize" type="listk2" default="Small" label="K2_IMAGE_SIZE" description="">
+                    <option value="XSmall">K2_XSMALL</option>
+                    <option value="Small">K2_SMALL</option>
+                    <option value="Medium">K2_MEDIUM</option>
+                    <option value="Large">K2_LARGE</option>
+                    <option value="XLarge">K2_XLARGE</option>
+                </field>
 				
 				<field type="spacer" hr="true" />
 				    
