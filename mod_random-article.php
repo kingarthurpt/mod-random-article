@@ -22,15 +22,14 @@ $language->load('mod_random-article');
 if($params->get('logfile'))
 	modRandomArticleHelper::logThis(1, print_r($params, true));
 
-$addCurrentID = false;
-if($params->get('itemid'))
-	$addCurrentID = true;
+$addCurrentID = $params->get('itemid') ? true : false;
+$useContentCatRouter = $params->get('contentCatUrl') ? true : false;
 
 $articles = modRandomArticleHelper::getArticles($params);
 if($articles > 0) { 
 	$i = 0;
 	foreach($articles as $article) {
-		$urls[$i] = modRandomArticleHelper::getUrl($article, $addCurrentID);
+		$urls[$i] = modRandomArticleHelper::getUrl($article, $addCurrentID, $useContentCatRouter);
 		
 		if($params->get('logfile')) {
 			modRandomArticleHelper::logThis(2, print_r($article, true));

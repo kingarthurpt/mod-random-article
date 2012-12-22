@@ -134,6 +134,11 @@
 					<option value="1">JYES</option>
 				</field>				
 				
+				<field name="contentCatUrl" type="radio" default="0" label="MOD_RANDOM_ARTICLE_CONTENTCATEGORYURL_LABEL" description="MOD_RANDOM_ARTICLE_CONTENTCATEGORYURL_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				
 				<field name="html5" type="radio" default="0" label="MOD_RANDOM_ARTICLE_HTML5_LABEL" description="MOD_RANDOM_ARTICLE_HTML5_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>

@@ -109,7 +109,7 @@ class modRandomArticleHelper {
 	 * Gets the correct URL for a given $article.
 	 * @return String $url The URL to the $article 
 	 */   
-	public static function getUrl( &$article, $addCurrentID) {
+	public static function getUrl( &$article, $addCurrentID, $useContentCatRouter) {
 		$id = $article->id;
 		
 		if($article->type == 'Joomla') {
@@ -134,8 +134,22 @@ class modRandomArticleHelper {
 		   	
 				if(isset($rows))
 					$url = $link . "&Itemid=" .$rows->id;
-				else
-					$url = $link;
+				else {
+					
+					// There is no menu item linked to $article. Checks if needs to use com_content > category > router
+					if($useContentCatRouter) {
+						// Fix for Menu Item "Articles > Category Blog"
+						$app = JFactory::getApplication();
+						$menu = $app->getMenu();
+						$activeMenuItem = $menu->getActive();
+							
+						// components/com_content/views/category/view.html.php
+						$slug = $article->alias ? ($article->id . ':' . $article->alias) : $article->id;
+						$url = JRoute::_(ContentHelperRoute::getArticleRoute($slug, $article->catid));
+					}
+					else
+						$url = $link;
+				}
 			}
 				
 			return $url;
@@ -290,6 +304,9 @@ class modRandomArticleHelper {
 		elseif($opt == 4)
 			$log = "LOG TYPE: HTML\n" . $data . "\n\n";
 			
+		elseif($opt == 5)
+			$log = "LOG TYPE: K2 IMAGE\n" . $data . "\n\n";
+			
 		file_put_contents($filename, $log, FILE_APPEND | LOCK_EX);
 		chmod($filename, 0775);
 	}
@@ -346,7 +363,10 @@ class modRandomArticleHelper {
 					$item->image .= $timestamp;
 			}
 		}
-				
+		/*
+		if($params->get('logfile'))
+			$this->logThis(1, $item->image);
+		*/		
 		return $item->image;
 	}
 }

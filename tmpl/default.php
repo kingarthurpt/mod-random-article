@@ -142,10 +142,11 @@ else
 				<?php 
 				if($params->get('introtextimage') && $article->type == "K2") :
 					$imgsrc = modRandomArticleHelper::getK2ArticleImage($article, $params->get('k2imagesize')); 	?>				
-					
-					<a href="<?php echo $urls[$i]; ?>">
-						<img src="<?php echo $imgsrc; ?>" alt="<?php echo $article->title; ?>"/>
-					</a>		
+					<div class="introimage">
+						<a href="<?php echo $urls[$i]; ?>">
+							<img src="<?php echo $imgsrc; ?>" alt="<?php echo $article->title; ?>"/>
+						</a>
+					</div>
 				
 				<?php endif; ?>
 				
