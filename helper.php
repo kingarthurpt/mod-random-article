@@ -144,6 +144,7 @@ class modRandomArticleHelper {
 						$activeMenuItem = $menu->getActive();
 							
 						// components/com_content/views/category/view.html.php
+						require_once (JPATH_SITE .DS. 'components' .DS. 'com_content' .DS . 'helpers' . DS . 'route.php');
 						$slug = $article->alias ? ($article->id . ':' . $article->alias) : $article->id;
 						$url = JRoute::_(ContentHelperRoute::getArticleRoute($slug, $article->catid));
 					}
