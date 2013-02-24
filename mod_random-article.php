@@ -25,6 +25,9 @@ if($params->get('logfile'))
 $addCurrentID = $params->get('itemid') ? true : false;
 $useContentCatRouter = $params->get('contentCatUrl') ? true : false;
 
+$numberArticles = $params->get('numberArticles');
+$numberK2Articles = $params->get('numberArticlesK2');
+
 $articles = modRandomArticleHelper::getArticles($params);
 if($articles > 0) { 
 	$i = 0;

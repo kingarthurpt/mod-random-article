@@ -35,7 +35,18 @@ class modRandomArticleHelper {
 		
 		if($params->get('categoryk2'))
 			$k2categories = implode(",", $params->get('categoryk2'));
-		
+			
+		if($params->get('excludeAccessLevel')) {
+			$excludeAccessLevel = implode(",", $params->get('excludeAccessLevel'));
+			
+			if($excludeAccessLevel)
+				$queryExclude = "AND access not in (". $excludeAccessLevel . ") ";
+		}
+		else {
+			$queryExclude = "";
+			$excludeAccessLevel = "";
+		}
+				
 		// Sets the timezone to match the Joomla configuration file
 		$app = JFactory::getApplication();
 		date_default_timezone_set ($app->getCfg('offset'));
@@ -45,10 +56,10 @@ class modRandomArticleHelper {
 			$query = "SELECT *, 'Joomla' as type ".
 						"FROM #__content ".
 						"WHERE catid in ";
-											
+							
 						// Selects articles from the subcategories. 
 						if($params->get('subcategories'))
-							$query .= "( SELECT id FROM #__categories WHERE parent_id in (".$categories.") OR id in (" .$categories .") )";
+							$query .= "( SELECT id FROM #__categories WHERE (parent_id in (".$categories.") OR id in (" .$categories .")) ".$queryExclude." )";
 						else
 							$query .= "( ".$categories." ) ";
 							
@@ -59,13 +70,24 @@ class modRandomArticleHelper {
 							$query .= "AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
 										"AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ";
 										
-			$query .= 	"ORDER BY RAND() ".
-						"LIMIT ".$numberArticles;
+			$query .= $queryExclude;
+										
+			$query .= 	"ORDER BY ".$params->get('ordering')." " .$params->get('orderDirection'). " ".
+						"LIMIT " . $numberArticles;
 						
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
-			$rows = $db->loadObjectList();			
+			$rows = $db->loadObjectList();
 			
+		}
+		
+		if($excludeAccessLevel) {
+			$queryExcludeCat = "AND c.access not in (". $excludeAccessLevel . ") ";
+			$queryExcludeItm = "AND i.access not in (". $excludeAccessLevel . ") ";
+		}
+		else {
+			$queryExcludeCat = "";
+			$queryExcludeItm = "";
 		}
 		
 		if($params->get('categoryk2') && count($params->get('categoryk2')) > 0) {
@@ -77,7 +99,7 @@ class modRandomArticleHelper {
 											
 						// Selects articles from the subcategories. 
 						if($params->get('subcategoriesk2'))
-							$query .= "( SELECT id FROM #__k2_categories WHERE parent in (".$k2categories.") OR id in (" .$k2categories .") ) ";
+							$query .= "( SELECT id FROM #__k2_categories WHERE (parent in (".$k2categories.") OR id in (" .$k2categories .")) ".$queryExcludeCat." ) ";
 						else
 							$query .= "( ".$k2categories." ) ";
 							
@@ -88,8 +110,15 @@ class modRandomArticleHelper {
 							$query .= "AND (i.publish_up <= '".date('Y-m-d H:i:s')."' OR i.publish_up = '0000-00-00 00:00:00') ".
 										"AND (i.publish_down >= '".date('Y-m-d H:i:s')."' OR i.publish_down = '0000-00-00 00:00:00') ";
 										
-			$query .= 	"ORDER BY RAND() ".
-						"LIMIT ".$numberArticlesK2;
+			$query .= $queryExcludeItm;
+										
+			if($params->get('ordering') == "rand()")
+				$ordering = $params->get('ordering');
+			else
+				$ordering = "i." . $params->get('ordering');
+				
+			$query .= 	"ORDER BY ".$ordering." " .$params->get('orderDirection')." ".						
+						"LIMIT " . $numberArticlesK2;
 
 			$db = JFactory::getDBO();
 			$db->setQuery($query);
@@ -101,7 +130,7 @@ class modRandomArticleHelper {
 			return $k2rows;
 		if(!isset($k2rows))
 			return $rows;
-			
+
 		return array_merge($rows, $k2rows);
 	}
    
@@ -144,7 +173,7 @@ class modRandomArticleHelper {
 						$activeMenuItem = $menu->getActive();
 							
 						// components/com_content/views/category/view.html.php
-						require_once (JPATH_SITE .DS. 'components' .DS. 'com_content' .DS . 'helpers' . DS . 'route.php');
+						require_once(JPATH_SITE.DS.'components'.DS.'com_content'.DS.'helpers'.DS.'route.php');
 						$slug = $article->alias ? ($article->id . ':' . $article->alias) : $article->id;
 						$url = JRoute::_(ContentHelperRoute::getArticleRoute($slug, $article->catid));
 					}
@@ -368,7 +397,10 @@ class modRandomArticleHelper {
 		if($params->get('logfile'))
 			$this->logThis(1, $item->image);
 		*/		
-		return $item->image;
+		if(isset($item->image))
+			return $item->image;
+		else
+			return null;
 	}
 }
 ?>

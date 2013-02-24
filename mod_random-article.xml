@@ -6,10 +6,26 @@
 	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
 	<creationDate>November 6th, 2012</creationDate>
-	<version>1.3.1</version>
+	<version>1.4</version>
 	<description>
-		This module displays random articles.
-		For more information, please visit http://code.google.com/p/mod-random-article/ 
+		<![CDATA[
+		mod_random-article - Version 1.4 <br>
+		This module displays random articles.<br><br>
+		For more information, please visit these pages:
+		<ul>		
+			<li><a href="http://code.google.com/p/mod-random-article/wiki/HowToUse" target="_blank">Documentation</a></li>
+			<li><a href="http://code.google.com/p/mod-random-article/issues/list" target="_blank">Bug Tracker / Improvements / Suggestions</a></li>
+			<li><a href="http://code.google.com/p/mod-random-article/wiki/NewFeatures" target="_blank">Upcoming Features</a></li>
+			<li><a href="http://code.google.com/p/mod-random-article/wiki/ChangeLog" target="_blank">ChangeLog</a></li>
+			<li><a href="https://www.transifex.com/projects/p/mod_random-article/" target="_blank">Contributing to new translations</a></li>
+		</ul> 
+		<br><br>
+		
+		Any donation would be very welcome.<br>
+		<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=N3SYCP2ZYRHFC&lc=GB&item_name=Artur%20Alves&item_number=mod_random%2darticle&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">
+			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" width="74" height="21">
+		</a>
+		]]>
 	</description>
 	<files>
 		<filename>mod_random-article.xml</filename>
@@ -17,6 +33,7 @@
 		<filename>index.html</filename>
 		<filename>helper.php</filename>
 		<filename>tmpl/default.php</filename>
+		<filename>tmpl/article.php</filename>
 		<filename>tmpl/index.html</filename>
 		<folder>models</folder>
 	</files>
@@ -30,7 +47,31 @@
 	</updateservers>
 	<config>
 		<fields name="params">
-			<fieldset name="basic" addfieldpath="/modules/mod_random-article/models/fields/"> 
+			<fieldset name="basic"> 
+			
+				<field name="autoModuleId" type="radio" default="1" label="MOD_RANDOM_ARTICLE_AUTOMODULEID_LABEL" description="MOD_RANDOM_ARTICLE_AUTOMODULEID_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				
+				<field name="moduleId" type="text" default="" label="MOD_RANDOM_ARTICLE_MODULEID_LABEL" description="MOD_RANDOM_ARTICLE_MODULEID_DESC" />
+				
+				<field name="moduleclass_sfx" type="text" default="" label="MOD_RANDOM_ARTICLE_MODULE_CLASS_SFX_LABEL" description="MOD_RANDOM_ARTICLE_MODULE_CLASS_SFX_DESC" />
+				
+				<field name="cache" type="list" default="0" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				
+				<field name="cachemode" type="hidden" default="static">
+					<option value="static"></option>
+				</field>
+			</fieldset>
+			
+			<fieldset name="MOD_RANDOM_ARTICLE_SOURCE" addfieldpath="/modules/mod_random-article/models/fields/">	
+				
 				<field name="category" type="category" extension="com_content" multiple="true" size="10" label="MOD_RANDOM_ARTICLE_CATEGORY_LABEL" description="MOD_RANDOM_ARTICLE_CATEGORY_DESC" />
 				
 				<field name="subcategories" type="radio" default="1" label="MOD_RANDOM_ARTICLE_SUBCATEGORIES_LABEL" description="MOD_RANDOM_ARTICLE_SUBCATEGORIES_DESC">
@@ -38,10 +79,7 @@
 					<option value="1">JYES</option>
 				</field>
 				
-				<field name="numberArticles" type="text" default="1" label="MOD_RANDOM_ARTICLE_NUMBERARTICLES_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERARTICLES_DESC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
+				<field name="numberArticles" type="text" default="1" label="MOD_RANDOM_ARTICLE_NUMBERARTICLES_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERARTICLES_DESC" />
 				
 				<field name="categoryk2" type="categoryk2" multiple="true" label="MOD_RANDOM_ARTICLE_CATEGORYK2_LABEL" description="MOD_RANDOM_ARTICLE_CATEGORYK2_DESC"/>
 				
@@ -50,12 +88,31 @@
 					<option value="1">JYES</option>
 				</field>
 				
-				<field name="numberArticlesK2" type="textk2" default="1" label="MOD_RANDOM_ARTICLE_NUMBERARTICLES_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERARTICLES_DESC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
+				<field name="numberArticlesK2" type="textk2" default="1" label="MOD_RANDOM_ARTICLE_NUMBERARTICLES_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERARTICLES_DESC" />
+				
+				<field type="spacer" hr="true" />
+				
+				<field 	name="ordering" type="list" default="rand()" label="MOD_RANDOM_ARTICLE_ORDERING_LABEL" description="MOD_RANDOM_ARTICLE_ORDERING_DESC">
+					<option value="rand()">MOD_RANDOM_ARTICLE_ORDERING_RANDOM</option>
+					<option value="created">MOD_RANDOM_ARTICLE_ORDERING_CREATED_DATE</option>
+					<option value="modified">MOD_RANDOM_ARTICLE_ORDERING_MODIFIED_DATE</option>
+					<option value="publish_up">MOD_RANDOM_ARTICLE_ORDERING_PUBLISHED_DATE</option>
+					<option value="ordering">MOD_RANDOM_ARTICLE_ORDERING_ORDERING</option>
+					<option value="hits">MOD_RANDOM_ARTICLE_ORDERING_HITS</option>
+					<option value="featured">MOD_RANDOM_ARTICLE_ORDERING_FEATURED</option>					
 				</field>
+				
+				<field 	name="orderDirection" type="list" default="" label="MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_LABEL" description="MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_DESC">
+					<option value="">MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_NULL</option>
+					<option value="ASC">MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_ASC</option>
+					<option value="DESC">MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_DESC</option>
+				</field>
+				
+				<field name="excludeAccessLevel" type="accesslevel" multiple="true" label="MOD_RANDOM_ARTICLE_EXCLUDEACCESSLEVEL_LABEL" description="MOD_RANDOM_ARTICLE_EXCLUDEACCESSLEVEL_DESC"/>
+								
 			</fieldset>
-			<fieldset name="MOD_RANDOM_ARTICLE_DISPLAY"> 
+			
+			<fieldset name="MOD_RANDOM_ARTICLE_ARTICLE_LAYOUT"> 
 				<field name="title" type="radio" default="1" label="MOD_RANDOM_ARTICLE_TITLE_LABEL" description="MOD_RANDOM_ARTICLE_TITLE_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -113,22 +170,46 @@
 					<option value="1">JYES</option>
 				</field>
 			</fieldset>
-			<fieldset name="MOD_RANDOM_ARTICLE_ADVANCED">
-				<field name="moduleclass_sfx" type="text" default="" label="MOD_RANDOM_ARTICLE_MODULE_CLASS_SFX_LABEL" description="MOD_RANDOM_ARTICLE_MODULE_CLASS_SFX_DESC" />
-				
-				<field name="cache" type="list" default="0" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
-					<option value="1">JGLOBAL_USE_GLOBAL</option>
-					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
-				</field>
-
-				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
-				
-				<field name="cachemode" type="hidden" default="static">
-					<option value="static"></option>
+			
+			<fieldset name="MOD_RANDOM_ARTICLE_MODULE_LAYOUT">
+				<field name="numberColumns" type="text" default="1" label="MOD_RANDOM_ARTICLE_NUMBERCOLUMNS_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERCOLUMNS_DESC"/>
+			
+			</fieldset>
+			
+			<fieldset name="MOD_RANDOM_ARTICLE_STYLE" >
+			
+				<field name="html5" type="radio" default="0" label="MOD_RANDOM_ARTICLE_HTML5_LABEL" description="MOD_RANDOM_ARTICLE_HTML5_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				
 				<field type="spacer" hr="true" />
+			
+				<field name="customCss" type="radio" default="0" label="MOD_RANDOM_ARTICLE_STYLECUSTOMCSS_LABEL" description="MOD_RANDOM_ARTICLE_STYLECUSTOMCSS_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			
+				<field type="spacer" label="MOD_RANDOM_ARTICLE_STYLE_TITLE_LABEL" />
+         		<field name="styleTitleColor" type="color" default="" label="MOD_RANDOM_ARTICLE_STYLE_COLOR_LABEL" description="MOD_RANDOM_ARTICLE_STYLE_COLOR_DESC" />
+         		<field name="styleTitleColorOver" type="color" default="" label="MOD_RANDOM_ARTICLE_STYLE_COLOROVER_LABEL" description="MOD_RANDOM_ARTICLE_STYLE_COLOROVER_DESC" />
+         		
+         		<field name="styleTitle" type="list" default="4" label="MOD_RANDOM_ARTICLE_STYLE_TITLESIZE_LABEL" description="MOD_RANDOM_ARTICLE_STYLE_TITLESIZE_DESC">
+					<option value="1">H1</option>
+					<option value="2">H2</option>
+					<option value="3">H3</option>
+					<option value="4">H4</option>
+					<option value="5">H5</option>
+					<option value="6">H6</option>
+				</field>
 				
+				<field type="spacer" label="MOD_RANDOM_ARTICLE_STYLE_READMORE_LABEL" />
+         		<field name="styleReadmoreColor" type="color" default="" label="MOD_RANDOM_ARTICLE_STYLE_COLOR_LABEL" description="MOD_RANDOM_ARTICLE_STYLE_COLOR_DESC" />
+         		<field name="styleReadmoreColorOver" type="color" default="" label="MOD_RANDOM_ARTICLE_STYLE_COLOROVER_LABEL" description="MOD_RANDOM_ARTICLE_STYLE_COLOROVER_DESC" />
+				 
+			</fieldset>
+			
+			<fieldset name="MOD_RANDOM_ARTICLE_ADVANCED">	
 				<field name="itemid" type="radio" default="0" label="MOD_RANDOM_ARTICLE_ITEMID_LABEL" description="MOD_RANDOM_ARTICLE_ITEMID_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -138,12 +219,9 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				
-				<field name="html5" type="radio" default="0" label="MOD_RANDOM_ARTICLE_HTML5_LABEL" description="MOD_RANDOM_ARTICLE_HTML5_DESC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
+
 			</fieldset>
+			
 			<fieldset name="MOD_RANDOM_ARTICLE_DEBUG">
 				<field name="warnings" type="radio" default="0" label="MOD_RANDOM_ARTICLE_DEBUG_WARNINGS_LABEL" description="MOD_RANDOM_ARTICLE_DEBUG_WARNINGS_DESC">
 					<option value="0">JNO</option>
