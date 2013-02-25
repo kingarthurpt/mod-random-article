@@ -19,19 +19,20 @@ if(isset($moduleID)) {
 	$moduleID = $moduleID[0];
 }
 else {
-	if($autoModuleId) {
-		jimport('joomla.application.module.helper');
-		$module = JModuleHelper::getModule('mod_random-article');
+	if($autoModuleId)
 		$moduleID = "modRandomArticle" . $module->id;
-	}
 } 
  
 $numberColumns = $params->get('numberColumns');
-$columnWidth = intval(100 / $numberColumns); 
- 
+if($numberColumns > 0)
+	$columnWidth = intval(100 / $numberColumns);
+else {
+	$numberColumns = 1;
+	$columnWidth = 100;
+}
 ?>
 
-<?php if($html5) : ?>
+<?php if($html5): ?>
 	<section <?php if(isset($moduleID)) echo 'id='.$moduleID.''; ?> class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
 <?php else: ?>
 	<div <?php if(isset($moduleID)) echo 'id='.$moduleID.''; ?> class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
@@ -54,12 +55,11 @@ $columnWidth = intval(100 / $numberColumns);
 					echo JText::sprintf('MOD_RANDOM_ARTICLE_WARNING_1');
 			}
 	
-			if($params->get('numberColumns') >= 1)
-	 			if(($numberArticles + $numberK2Articles) % $params->get('numberColumns') != 0)  
+			if($numberColumns >= 1)
+	 			if(($numberArticles + $numberK2Articles) % $numberColumns != 0)  
 	 				$lineArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns) + 1;
 				else 
 	 				$lineArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns);
-	 		echo "line:". $lineArticles;
 	 		
 	 		$column = 0;
 			$i = 0;
@@ -84,7 +84,6 @@ $columnWidth = intval(100 / $numberColumns);
 					
 					<?php include 'article.php'; ?>
 					
-					<?php echo "[" . $i ."-". $column ."-". $numberColumns . "-". ($lineArticles - 1) . "]"; ?>
 					<?php if($column >= 1 && $column <= $numberColumns && $i == $lineArticles - 1 ) : ?>
 						</div>
 					<?php endif; ?>

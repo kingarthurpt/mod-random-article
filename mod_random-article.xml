@@ -5,8 +5,8 @@
 	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
 	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
-	<creationDate>November 6th, 2012</creationDate>
-	<version>1.4</version>
+	<creationDate>February 25th, 2013</creationDate>
+	<version>1.4.0.63</version>
 	<description>
 		<![CDATA[
 		mod_random-article - Version 1.4 <br>
@@ -40,10 +40,9 @@
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.mod_random-article.ini</language>
 		<language tag="en-US">language/en-US/en-US.mod_random-article.ini</language>
-		<language tag="pt-PT">language/pt-PT/pt-PT.mod_random-article.ini</language>
 	</languages>
 	<updateservers>
-		<server type="extension" priority="1" name="ArturAlves">http://mod-random-article.googlecode.com/files/mod_random-article.xml</server>
+		<server type="extension" priority="1" name="GoogleCode">http://mod-random-article.googlecode.com/files/mod_random-article.xml</server>
 	</updateservers>
 	<config>
 		<fields name="params">
