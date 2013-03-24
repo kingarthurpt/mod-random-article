@@ -6,10 +6,10 @@
 	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
 	<creationDate>February 25th, 2013</creationDate>
-	<version>1.4.0.63</version>
+	<version>1.4.0.68</version>
 	<description>
 		<![CDATA[
-		mod_random-article - Version 1.4 <br>
+		mod_random-article - Version 1.4.0.68 <br>
 		This module displays random articles.<br><br>
 		For more information, please visit these pages:
 		<ul>		
@@ -36,6 +36,7 @@
 		<filename>tmpl/article.php</filename>
 		<filename>tmpl/index.html</filename>
 		<folder>models</folder>
+		<folder>css</folder>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.mod_random-article.ini</language>
