@@ -57,38 +57,27 @@ else {
 	
 			if($numberColumns >= 1)
 	 			if(($numberArticles + $numberK2Articles) % $numberColumns != 0)  
-	 				$lineArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns) + 1;
+	 				$columnArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns) + 1;
 				else 
-	 				$lineArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns);
+	 				$columnArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns);
 	 		
 	 		$column = 0;
 			$i = 0;
-			$displayingHidden = 0;
 			foreach($articles as $article) { ?>
 							
-					<?php if(($i % $lineArticles == 0) && ($column <= $numberColumns) && ($numberColumns > 1) && ($displayingHidden == 0) && ($numberArticles + $numberK2Articles) > 1) : ?>
+					<?php if(($i % $columnArticles == 0) && ($column <= $numberColumns) && ($numberColumns > 1) && ($numberArticles + $numberK2Articles) > 1) : ?>
 						<div class="column col-<?php echo $column + 1; ?>" style="width:<?php echo $columnWidth; ?>%;">
 					<?php $column++; ?>
-					
-					
-					<?php else: ?>
-						<?php if($displayingHidden == 2) : ?>
-							</div>
-							<div class="hidden-random-articles">
-						<?php $displayingHidden = 1; endif; ?>
-						
-						<?php if($displayingHidden == 3) : ?>
-							</div>
-						<?php endif; ?>
 					<?php endif; ?>
 					
 					<?php include 'article.php'; ?>
+					<?php $i++; ?>
 					
-					<?php if($column >= 1 && $column <= $numberColumns && $i == $lineArticles - 1 ) : ?>
-						</div>
+					<?php if($column >= 1 && $column <= $numberColumns && $i == $columnArticles) : ?>
+						</div> <!-- pixa -->
+						<?php $i = 0; ?>
 					<?php endif; ?>
-					<?php 											
-				$i++;				
+					<?php 				
 			}  // foreach
 			
 		} ?>
