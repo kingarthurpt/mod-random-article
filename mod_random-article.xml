@@ -5,20 +5,20 @@
 	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
 	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
-	<creationDate>February 25th, 2013</creationDate>
-	<version>1.4.0.69</version>
+	<creationDate>March 30th, 2013</creationDate>
+	<version>1.4.1</version>
 	<description>
 		<![CDATA[
-		mod_random-article - Version 1.4.0.69 <br>
+		mod_random-article - Version 1.4.1 <br>
 		This module displays random articles.<br><br>
 		For more information, please visit these pages:
-		<ul>		
+		<ul>
 			<li><a href="http://code.google.com/p/mod-random-article/wiki/HowToUse" target="_blank">Documentation</a></li>
 			<li><a href="http://code.google.com/p/mod-random-article/issues/list" target="_blank">Bug Tracker / Improvements / Suggestions</a></li>
 			<li><a href="http://code.google.com/p/mod-random-article/wiki/NewFeatures" target="_blank">Upcoming Features</a></li>
 			<li><a href="http://code.google.com/p/mod-random-article/wiki/ChangeLog" target="_blank">ChangeLog</a></li>
 			<li><a href="https://www.transifex.com/projects/p/mod_random-article/" target="_blank">Contributing to new translations</a></li>
-		</ul> 
+		</ul>
 		<br><br>
 		
 		Any donation would be very welcome.<br>
@@ -36,7 +36,6 @@
 		<filename>tmpl/article.php</filename>
 		<filename>tmpl/index.html</filename>
 		<folder>models</folder>
-		<folder>css</folder>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.mod_random-article.ini</language>
@@ -173,6 +172,10 @@
 			
 			<fieldset name="MOD_RANDOM_ARTICLE_MODULE_LAYOUT">
 				<field name="numberColumns" type="text" default="1" label="MOD_RANDOM_ARTICLE_NUMBERCOLUMNS_LABEL" description="MOD_RANDOM_ARTICLE_NUMBERCOLUMNS_DESC"/>
+				
+				<field name="columnWidth" type="text" default="0" label="MOD_RANDOM_ARTICLE_COLUMNWIDTH_LABEL" description="MOD_RANDOM_ARTICLE_COLUMNWIDTH_DESC"/>
+				
+				<field name="columnMargin" type="text" default="0" label="MOD_RANDOM_ARTICLE_COLUMNMARGIN_LABEL" description="MOD_RANDOM_ARTICLE_COLUMNMARGIN_DESC"/>
 			
 			</fieldset>
 			

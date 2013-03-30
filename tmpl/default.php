@@ -24,8 +24,13 @@ else {
 } 
  
 $numberColumns = $params->get('numberColumns');
+$columnMargin = $params->get('columnMargin');
+
 if($numberColumns > 0)
-	$columnWidth = intval(100 / $numberColumns);
+	if ($params->get('columnWidth') > 0 && $params->get('columnWidth') <= 100)
+		$columnWidth = $params->get('columnWidth');
+	else	
+		$columnWidth = intval(100 / $numberColumns);
 else {
 	$numberColumns = 1;
 	$columnWidth = 100;
@@ -66,7 +71,7 @@ else {
 			foreach($articles as $article) { ?>
 							
 					<?php if(($i % $columnArticles == 0) && ($column <= $numberColumns) && ($numberColumns > 1) && ($numberArticles + $numberK2Articles) > 1) : ?>
-						<div class="column col-<?php echo $column + 1; ?>" style="width:<?php echo $columnWidth; ?>%;">
+						<div class="column col-<?php echo $column + 1; ?>">
 					<?php $column++; ?>
 					<?php endif; ?>
 					
@@ -74,7 +79,7 @@ else {
 					<?php $i++; ?>
 					
 					<?php if($column >= 1 && $column <= $numberColumns && $i == $columnArticles) : ?>
-						</div> <!-- pixa -->
+						</div>
 						<?php $i = 0; ?>
 					<?php endif; ?>
 					<?php 				
@@ -89,27 +94,38 @@ else {
 	</div>
 <?php endif; ?>
 
-<?php if($params->get('customCss')): ?>
-	<style type="text/css">
-		.random-article .title h<?php echo $params->get('styleTitle'); ?> <?php if($params->get('linktitle')) echo "a"; ?> {
-			color: <?php echo $params->get('styleTitleColor'); ?>;
+<style type="text/css">
+	.random-article-wrapper .column {
+			width: <?php echo $columnWidth; ?>%;
+			margin-right: <?php echo $columnMargin; ?>px;
+			float: left;
 		}
 		
-		<?php if($params->get('linktitle')): ?>
-		.random-article .title h<?php echo $params->get('styleTitle'); ?> a:hover {
-			color: <?php echo $params->get('styleTitleColorOver'); ?>;
-		}
-		<?php endif; ?>
+	.random-article-wrapper .column:last-child { margin-right: auto; }
+	
+	.random-article-wrapper .clearfix { clear: both; }
 		
-		<?php if($params->get('readmore')): ?>
-		.random-article .readmore a {
-			color: <?php echo $params->get('styleReadmoreColor'); ?>;
-		}
+	<?php if($params->get('customCss')): ?>
+	.random-article .title h<?php echo $params->get('styleTitle'); ?> <?php if($params->get('linktitle')) echo "a"; ?> {
+		color: <?php echo $params->get('styleTitleColor'); ?>;
+	}
+	
+	<?php if($params->get('linktitle')): ?>
+	.random-article .title h<?php echo $params->get('styleTitle'); ?> a:hover {
+		color: <?php echo $params->get('styleTitleColorOver'); ?>;
+	}
+	<?php endif; ?>
+	
+	<?php if($params->get('readmore')): ?>
+	.random-article .readmore a {
+		color: <?php echo $params->get('styleReadmoreColor'); ?>;
+	}
+	
+	.random-article .readmore a:hover {
+		color: <?php echo $params->get('styleReadmoreColorOver'); ?>;
+	}
+	<?php endif; ?>
 		
-		.random-article .readmore a:hover {
-			color: <?php echo $params->get('styleReadmoreColorOver'); ?>;
-		}
-		<?php endif; ?>		
-	</style>
-<?php endif; ?>
+	<?php endif; ?>
+</style>
 

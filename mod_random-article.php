@@ -43,8 +43,8 @@ if($articles > 0) {
 	}
 }
 
-$document = JFactory::getDocument();
-$document->addStyleSheet(JURI::base().DS.'modules'.DS.'mod_random-article'.DS.'css'.DS.'random-article.css');
+//$document = JFactory::getDocument();
+//$document->addStyleSheet(JURI::base().'modules'.DS.'mod_random-article'.DS.'css'.DS.'random-article.css');
 
 require(JModuleHelper::getLayoutPath('mod_random-article'));
 ?>
