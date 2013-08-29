@@ -126,12 +126,16 @@ class modRandomArticleHelper {
 			
 		}
 		
-		if(!isset($rows))
+		if(!isset($rows) && count($k2rows) > 0)
 			return $k2rows;
-		if(!isset($k2rows))
-			return $rows;
+		else
+			if(!isset($k2rows) && count($rows) > 0)
+				return $rows;
 
-		return array_merge($rows, $k2rows);
+		if(count($rows) > 0 && count($k2rows) > 0)
+			return array_merge($rows, $k2rows);
+		else
+			return 0;
 	}
    
 	/**

@@ -38,14 +38,17 @@ else {
 ?>
 
 <?php if($html5): ?>
-	<section <?php if(isset($moduleID)) echo 'id='.$moduleID.''; ?> class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
+	<section <?php if(isset($moduleID)) echo 'id="'.$moduleID.'"'; ?> class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
 <?php else: ?>
-	<div <?php if(isset($moduleID)) echo 'id='.$moduleID.''; ?> class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
+	<div <?php if(isset($moduleID)) echo 'id="'.$moduleID.'"'; ?> class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
 <?php endif; ?>
 
 		<?php
 		// Shows an error if the user didn't select any category
 		if($articles <= 0) {
+			// Shows a warning if there are no articles to be displayed
+			if($articles == 0 && $params->get('warnings'))
+				echo JText::sprintf('MOD_RANDOM_ARTICLE_WARNING_3');
 			if($articles == -2)
 				echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_1');
 			if($articles == -3)

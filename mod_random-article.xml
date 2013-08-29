@@ -3,13 +3,13 @@
 	<name>Random Article</name>
 	<author>Artur Alves</author>
 	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
-	<authorUrl>http://www.freelancer.com/u/kingarthurpt.html</authorUrl>
+	<authorUrl>http://www.linkedin.com/pub/artur-alves/3a/668/19a</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
 	<creationDate>March 30th, 2013</creationDate>
-	<version>1.4.1</version>
+	<version>1.4.1.75</version>
 	<description>
 		<![CDATA[
-		mod_random-article - Version 1.4.1 <br>
+		mod_random-article - Version 1.4.1.75 <br>
 		This module displays random articles.<br><br>
 		For more information, please visit these pages:
 		<ul>
@@ -226,7 +226,7 @@
 			</fieldset>
 			
 			<fieldset name="MOD_RANDOM_ARTICLE_DEBUG">
-				<field name="warnings" type="radio" default="0" label="MOD_RANDOM_ARTICLE_DEBUG_WARNINGS_LABEL" description="MOD_RANDOM_ARTICLE_DEBUG_WARNINGS_DESC">
+				<field name="warnings" type="radio" default="1" label="MOD_RANDOM_ARTICLE_DEBUG_WARNINGS_LABEL" description="MOD_RANDOM_ARTICLE_DEBUG_WARNINGS_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
