@@ -71,6 +71,7 @@ else {
 	 		
 	 		$column = 0;
 			$i = 0;
+			$articleIndex = 0;
 			foreach($articles as $article) { ?>
 							
 					<?php if(($i % $columnArticles == 0) && ($column <= $numberColumns) && ($numberColumns > 1) && ($numberArticles + $numberK2Articles) > 1) : ?>
@@ -79,7 +80,7 @@ else {
 					<?php endif; ?>
 					
 					<?php include 'article.php'; ?>
-					<?php $i++; ?>
+					<?php $i++; $articleIndex++; ?>
 					
 					<?php if($column >= 1 && $column <= $numberColumns && $i == $columnArticles) : ?>
 						</div>

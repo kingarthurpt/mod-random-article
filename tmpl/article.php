@@ -22,7 +22,7 @@
 		<div class="title">
 			<?php if($params->get('linktitle')): ?>
 				<?php echo $titleTag; ?>
-					<a href="<?php echo $urls[$i]; ?>"><?php echo $article->title; ?></a>
+					<a href="<?php echo $urls[$articleIndex]; ?>"><?php echo $article->title; ?></a>
 				<?php echo $titleCloseTag; ?>
 			<?php else: ?>
 				<?php echo $titleTag; ?>
@@ -91,7 +91,7 @@
 			<div class="introimage">
 				<?php $imgfloat = (empty($images->float_intro)) ? $params->get('float_intro') : $images->float_intro; ?>
 				<div class="img-intro-<?php echo htmlspecialchars($imgfloat); ?>">
-					<a href="<?php echo $urls[$i]; ?>">
+					<a href="<?php echo $urls[$articleIndex]; ?>">
 						<img
 						<?php if ($images->image_intro_caption):
 									echo 'class="caption"'.' title="' .htmlspecialchars($images->image_intro_caption) .'"';
@@ -107,7 +107,7 @@
 	if($params->get('introtextimage') && $article->type == "K2") :
 		$imgsrc = modRandomArticleHelper::getK2ArticleImage($article, $params->get('k2imagesize')); 	?>				
 		<div class="introimage">
-			<a href="<?php echo $urls[$i]; ?>">
+			<a href="<?php echo $urls[$articleIndex]; ?>">
 				<img src="<?php echo $imgsrc; ?>" alt="<?php echo $article->title; ?>"/>
 			</a>
 		</div>
@@ -115,7 +115,7 @@
 	<?php endif; ?>
 	
 	<?php if($params->get('readmore')) : ?>
-		<div class="readmore"><a href="<?php echo $urls[$i]; ?>"> <?php echo JText::sprintf('MOD_RANDOM_ARTICLE_READMORE'); ?> </a></div>
+		<div class="readmore"><a href="<?php echo $urls[$articleIndex]; ?>"> <?php echo JText::sprintf('MOD_RANDOM_ARTICLE_READMORE'); ?> </a></div>
 	<?php endif; ?>
 		
 	<?php if($params->get('fulltext')) : ?>

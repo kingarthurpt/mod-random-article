@@ -5,11 +5,11 @@
 	<authorEmail>artur.ze.alves@gmail.com</authorEmail>
 	<authorUrl>http://www.linkedin.com/pub/artur-alves/3a/668/19a</authorUrl>
 	<license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
-	<creationDate>August 30th, 2013</creationDate>
-	<version>1.4.1.76</version>
+	<creationDate>August 31th, 2013</creationDate>
+	<version>1.4.1.78</version>
 	<description>
 		<![CDATA[
-		mod_random-article - Version 1.4.1.76 <br>
+		mod_random-article - Version 1.4.1.78 <br>
 		This module displays random articles.<br><br>
 		For more information, please visit these pages:
 		<ul>
