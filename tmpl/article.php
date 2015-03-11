@@ -1,4 +1,4 @@
-<?php if ($html5) : ?>
+<?php if ($params->get('html5')) : ?>
     <article class="random-article <?php if ($article->type == "K2") echo "random-k2-article "; ?> ">
 <?php else: ?>
     <div class="random-article <?php if ($article->type == "K2") echo "random-k2-article "; ?> ">
@@ -142,7 +142,7 @@
             <?php echo $article->fulltext; ?> 
         </div>
     <?php endif; ?>
-<?php if ($html5) : ?>
+<?php if ($params->get('html5')) : ?>
     </article>
 <?php else: ?>
     </div>

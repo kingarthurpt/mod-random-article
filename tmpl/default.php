@@ -10,7 +10,7 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-$html5 = $params->get('html5') ? 1 : 0;
+// $html5 = $params->get('html5') ? 1 : 0;
 $autoModuleId = $params->get('autoModuleId') ? true : false;
 $moduleID = $params->get('moduleId');
 
@@ -38,7 +38,7 @@ if ($numberColumns > 0) {
 }
 ?>
 
-<?php if ($html5): ?>
+<?php if ($params->get('html5')): ?>
     <section <?php if (isset($moduleID)) echo 'id="'.$moduleID.'"'; ?> class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
 <?php else: ?>
     <div <?php if (isset($moduleID)) echo 'id="'.$moduleID.'"'; ?> class="random-article-wrapper <?php echo $params->get('moduleclass_sfx'); ?>">
@@ -73,33 +73,52 @@ if ($numberColumns > 0) {
             }
     
             if ($numberColumns >= 1) {
-                 if (($numberArticles + $numberK2Articles) % $numberColumns != 0) {
-                    $columnArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns) + 1;
-                 } else {
-                    $columnArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns);
-                 }
+                $columnArticles = intval(($numberArticles + $numberK2Articles) / $numberColumns);
             }
             
-            $output = "";
+            $columns = array();
             for($columnIndex = 0; $columnIndex < $numberColumns; $columnIndex++) {
-                $output .= '<div class="column col-' . ($columnIndex + 1) . '">';
-
-                $articleOutput = "";
-                for($articleIndex = 0; $articleIndex < $columnArticles; $articleIndex++) {
-                // foreach($columnArticles as $articleIndex => $article) {
-                    $article = $articles[$articleIndex];
-                    ob_start();
-                    include 'article.php';
-                    $output .= ob_get_clean();
-                }
-
-                $output .= '</div>';
+                $columns[$columnIndex] = '<div class="column col-' . ($columnIndex + 1) . '">';
             }
-            echo $output;            
+
+            $articleIndex = 0;
+            while($articleIndex < count($articles)) {
+                foreach ($columns as $columnIndex => $column) {
+                    if (isset($articles[$articleIndex])) {
+                        $columns[$columnIndex] .= modRandomArticleHelper::getArticleHtml($params, $articles[$articleIndex]);
+                        $articleIndex++;
+                    }
+                }
+            }
+
+            for($columnIndex = 0; $columnIndex < $numberColumns; $columnIndex++) {
+                echo $columns[$columnIndex] . '</div>';
+            }
+            
+            // $output = "";
+            // $numberArticlesShown = 0;
+            // for($columnIndex = 0; $columnIndex < $numberColumns; $columnIndex++) {
+            //     $output .= '<div class="column col-' . ($columnIndex + 1) . '">';
+
+            //     $articleOutput = "";
+            //     for($articleIndex = 0; $articleIndex < $columnArticles; $articleIndex++) {
+            //         if (isset($articles[$numberArticlesShown])) {
+            //             $output .= modRandomArticleHelper::getArticleHtml($params, $articles[$numberArticlesShown]);
+            //             $numberArticlesShown++;
+            //         } else {
+            //             $articleIndex = $columnArticles;
+            //             $columnIndex = $numberColumns;
+            //         }
+            //     }
+
+            //     $output .= '</div>';
+            //     echo $output;
+            // }
+
         } ?>
         
         
-<?php if ($html5) : ?>
+<?php if ($params->get('html5')) : ?>
     </section>
 <?php else: ?>
     </div>

@@ -16,8 +16,8 @@ class modRandomArticleHelper {
      * Picks $numberArticles random articles from the chosen categories.
      * @return Array $rows On success returns an array with the random articles, otherwise returns -1
      */    
-    public static function getArticles( &$params ) {
-        
+    public static function getArticles( &$params )
+    {        
         // Converts numberArticles to a number.
         $numberArticles = intval($params->get('numberArticles'));
         $numberArticlesK2 = intval($params->get('numberArticlesK2'));
@@ -142,7 +142,8 @@ class modRandomArticleHelper {
      * Gets the correct URL for a given $article.
      * @return String $url The URL to the $article 
      */   
-    public static function getUrl( &$article, $addCurrentID, $useContentCatRouter) {
+    public static function getUrl( &$article, $addCurrentID, $useContentCatRouter)
+    {
         $id = $article->id;
         
         if($article->type == 'Joomla') {
@@ -208,7 +209,8 @@ class modRandomArticleHelper {
      * @param $html The String to be cutted
      * @return String $str A substring of $html that still is a valid HTML String 
      */
-    public static function substr_HTML($maxLength, $html, $isUtf8=true) {
+    public static function substr_HTML($maxLength, $html, $isUtf8 = true)
+    {
         $printedLength = 0;
         $position = 0;
         $tags = array();
@@ -284,7 +286,8 @@ class modRandomArticleHelper {
      * Thanks for webKami for sharing this function
      * http://www.webkami.com/programming/php/php-function-str-nth-pos/php-function-str-nth-pos-1-0-0.php
      */
-    public static function strposnth($haystack, $needle, $nth=1, $insenstive=0) {
+    public static function strposnth($haystack, $needle, $nth = 1, $insenstive = 0)
+    {
         //if its case insenstive, convert strings into lower case
         if ($insenstive) {
             $haystack=strtolower($haystack);
@@ -322,7 +325,8 @@ class modRandomArticleHelper {
      * @param $opt the type of output to be logged: 1=settings 2=article 3=url 4=html
      * @param $data the output to be logged
      */
-    public static function logThis($opt = 1, $data = "") {
+    public static function logThis($opt = 1, $data = "")
+    {
         $filename = "tmp".DS."mod_random-article-debuglogfile.txt";
         $timestamp = "Timestamp: ".date('Y-m-d H:i:s') . "\n";
         $log = "";
@@ -351,7 +355,8 @@ class modRandomArticleHelper {
      * This code was copied from mod_k2_content - helper.php - class modK2ContentHelper - function getItems()
      * and adjusted to fit this module needs
      */
-    public static function getK2ArticleImage($item, $size) {
+    public static function getK2ArticleImage($item, $size)
+    {
         $componentParams = JComponentHelper::getParams('com_k2');
         
         //Images
@@ -405,6 +410,16 @@ class modRandomArticleHelper {
             return $item->image;
         else
             return null;
+    }
+
+    /**
+     * Executes the article's template and returns its content as HTML
+     */
+    public static function getArticleHtml($params, $article)
+    {
+        ob_start();
+        include JPATH_ROOT.DS.'modules'.DS.'mod_random-article'.DS.'tmpl'.DS.'article.php';
+        return ob_get_clean();
     }
 }
 ?>
