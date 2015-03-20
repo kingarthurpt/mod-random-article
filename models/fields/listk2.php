@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Module Random Article for Joomla! 2.5+
- * @version $Id$
+ * @version $Id: listk2.php 50 2012-12-16 19:28:47Z artur.ze.alves@gmail.com $
  * @author Artur Alves
  * @copyright (C) 2012 - Artur Alves
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html

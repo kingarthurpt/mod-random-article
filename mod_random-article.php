@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Module Random Article for Joomla! 2.5+
- * @version $Id$
+ * @version $Id: mod_random-article.php 76 2013-08-30 05:52:54Z artur.ze.alves@gmail.com $
  * @author Artur Alves
  * @copyright (C) 2012 - Artur Alves
  * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html

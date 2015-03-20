@@ -107,7 +107,7 @@
     
     <?php 
     if ($params->get('introtextimage') && $article->type == "K2") :
-        $imgsrc = modRandomArticleHelper::getK2ArticleImage($article, $params->get('k2imagesize'));     ?>                
+        $imgsrc = modRandomArticleHelper::getK2ArticleImage($article, $params->get('k2imagesize'));     ?>
         <div class="introimage">
             <a href="<?php echo $urls[$articleIndex]; ?>">
                 <img src="<?php echo $imgsrc; ?>" alt="<?php echo $article->title; ?>"/>
