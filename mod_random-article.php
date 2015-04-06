@@ -12,16 +12,19 @@ defined('_JEXEC') or die('Restricted access');
  
 // Fix for Joomla 3
 if (!defined('DS')) {
-	define('DS',DIRECTORY_SEPARATOR);
+    define('DS',DIRECTORY_SEPARATOR);
 }
 
 require_once(dirname(__FILE__).DS.'helper.php');
+require_once(dirname(__FILE__).DS.'modRandomArticle.php');
+
+$randomArticle = new modRandomArticle();
 
 $language = JFactory::getLanguage();
 $language->load('mod_random-article');
 
 if ($params->get('logfile')) {
-	modRandomArticleHelper::logThis(1, print_r($params, true));
+    modRandomArticleHelper::logThis(1, print_r($params, true));
 }
 
 $addCurrentID = $params->get('itemid') ? true : false;
@@ -32,18 +35,20 @@ $numberK2Articles = $params->get('numberArticlesK2');
 
 $articles = modRandomArticleHelper::getArticles($params);
 if ($articles > 0) { 
-	$i = 0;
-	foreach($articles as $article) {
-		$urls[$i] = modRandomArticleHelper::getUrl($article, $addCurrentID, $useContentCatRouter);
-		
-		if ($params->get('logfile')) {
-			modRandomArticleHelper::logThis(2, print_r($article, true));
-			modRandomArticleHelper::logThis(3, print_r($urls[$i], true));
-		}
-		
-		$i++;
-	}
+    $i = 0;
+    foreach($articles as $article) {
+        $urls[$i] = modRandomArticleHelper::getUrl($article, $addCurrentID, $useContentCatRouter);
+        
+        if ($params->get('logfile')) {
+            modRandomArticleHelper::logThis(2, print_r($article, true));
+            modRandomArticleHelper::logThis(3, print_r($urls[$i], true));
+        }
+        
+        $i++;
+    }
 }
+$randomArticle->setUrls($urls);
+$params->set('randomArticle', $randomArticle);
 
 require(JModuleHelper::getLayoutPath('mod_random-article'));
 ?>

@@ -1,3 +1,20 @@
+<?php
+/**
+ * @package Module Random Article for Joomla! 2.5+
+ * @version $Id: helper.php 75 2013-08-29 05:21:29Z artur.ze.alves@gmail.com $
+ * @author Artur Alves
+ * @copyright (C) 2010- Artur Alves
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+**/
+
+// no direct access
+defined('_JEXEC') or die('Restricted access');
+
+$randomArticle = $params->get('randomArticle');
+$urls = $randomArticle->getUrls();
+
+?>
+
 <?php if ($params->get('html5')) : ?>
     <article class="random-article <?php if ($article->type == "K2") echo "random-k2-article "; ?> ">
 <?php else: ?>
@@ -36,7 +53,8 @@
 
     <?php if ($params->get('article_category')): ?>
     	<div class="category">
-    		<a href="index.php?option=com_content&view=category&id=<?php echo '$article->catid'; ?>&Itemid=102">
+    		<?php echo JText::sprintf('MOD_RANDOM_ARTICLE_DISPLAY_CATEGORY');?>: 
+    		<a href="index.php?option=com_content&view=category&id=<?php echo $article->catid; ?>&Itemid=102">
     			<?php echo $article->cat_title; ?>
     		</a>
     	</div>

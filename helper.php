@@ -416,9 +416,10 @@ class modRandomArticleHelper {
     /**
      * Executes the article's template and returns its content as HTML
      */
-    public static function getArticleHtml($params, $article)
+    public static function getArticleHtml($params, $articles, $articleIndex)
     {
         ob_start();
+        $article = $articles[$articleIndex];
         include JPATH_ROOT.DS.'modules'.DS.'mod_random-article'.DS.'tmpl'.DS.'article.php';
         return ob_get_clean();
     }

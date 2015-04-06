@@ -85,7 +85,7 @@ if ($numberColumns > 0) {
             while($articleIndex < count($articles)) {
                 foreach ($columns as $columnIndex => $column) {
                     if (isset($articles[$articleIndex])) {
-                        $columns[$columnIndex] .= modRandomArticleHelper::getArticleHtml($params, $articles[$articleIndex]);
+                        $columns[$columnIndex] .= modRandomArticleHelper::getArticleHtml($params, $articles, $articleIndex);
                         $articleIndex++;
                     }
                 }
