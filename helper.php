@@ -40,7 +40,7 @@ class modRandomArticleHelper {
             $excludeAccessLevel = implode(",", $params->get('excludeAccessLevel'));
             
             if($excludeAccessLevel)
-                $queryExclude = "AND access not in (". $excludeAccessLevel . ") ";
+                $queryExclude = "AND a.access not in (". $excludeAccessLevel . ") ";
         }
         else {
             $queryExclude = "";
@@ -53,9 +53,10 @@ class modRandomArticleHelper {
  
           if(count($params->get('category')) > 0) {
             //  The selected articles are published and have valid publish and unpublish dates
-            $query = "SELECT *, 'Joomla' as type ".
-                        "FROM #__content ".
-                        "WHERE catid in ";
+            $query = "SELECT a.*, c.title as 'cat_title', 'Joomla' as type " .
+                        "FROM #__content a " .
+                        "LEFT JOIN #__categories c ON c.id = a.catid " .
+                        "WHERE a.catid in ";
                             
                         // Selects articles from the subcategories. 
                         if($params->get('subcategories'))
@@ -63,12 +64,12 @@ class modRandomArticleHelper {
                         else
                             $query .= "( ".$categories." ) ";
                             
-            $query .= "AND state = '1' ";
+            $query .= " AND a.state = '1' ";
             
                         // Disables time restrictions and selects articles without checking if the dates are correct.
                         if(!$params->get('timerestrictions'))
-                            $query .= "AND (publish_up <= '".date('Y-m-d H:i:s')."' OR publish_up = '0000-00-00 00:00:00') ".
-                                        "AND (publish_down >= '".date('Y-m-d H:i:s')."' OR publish_down = '0000-00-00 00:00:00') ";
+                            $query .= "AND (a.publish_up <= '".date('Y-m-d H:i:s')."' OR a.publish_up = '0000-00-00 00:00:00') ".
+                                        "AND (a.publish_down >= '".date('Y-m-d H:i:s')."' OR a.publish_down = '0000-00-00 00:00:00') ";
                                         
             $query .= $queryExclude;
                                         

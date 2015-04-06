@@ -117,7 +117,7 @@ if ($numberColumns > 0) {
 
         } ?>
         
-        
+        <div class="clearfix"></div>
 <?php if ($params->get('html5')) : ?>
     </section>
 <?php else: ?>

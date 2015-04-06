@@ -10,7 +10,6 @@
 }
         
 .random-article-wrapper .column:last-child { margin-right: auto; }
-    
 .random-article-wrapper .clearfix { clear: both; }
         
 <?php if($params->get('customCss')): ?>
@@ -33,6 +32,10 @@
             color: <?php echo $params->get('styleReadmoreColorOver'); ?>;
         }
     <?php endif; ?>        
+<?php endif; ?>
+
+<?php if($params->get('customStyle')): ?>
+<?php echo $params->get('customStyle'); ?>
 <?php endif; ?>
 
 <?php

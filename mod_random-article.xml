@@ -92,7 +92,7 @@
                 
                 <field type="spacer" hr="true" />
                 
-                <field     name="ordering" type="list" default="rand()" label="MOD_RANDOM_ARTICLE_ORDERING_LABEL" description="MOD_RANDOM_ARTICLE_ORDERING_DESC">
+                <field name="ordering" type="list" default="rand()" label="MOD_RANDOM_ARTICLE_ORDERING_LABEL" description="MOD_RANDOM_ARTICLE_ORDERING_DESC">
                     <option value="rand()">MOD_RANDOM_ARTICLE_ORDERING_RANDOM</option>
                     <option value="created">MOD_RANDOM_ARTICLE_ORDERING_CREATED_DATE</option>
                     <option value="modified">MOD_RANDOM_ARTICLE_ORDERING_MODIFIED_DATE</option>
@@ -102,7 +102,7 @@
                     <option value="featured">MOD_RANDOM_ARTICLE_ORDERING_FEATURED</option>                    
                 </field>
                 
-                <field     name="orderDirection" type="list" default="" label="MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_LABEL" description="MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_DESC">
+                <field name="orderDirection" type="list" default="" label="MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_LABEL" description="MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_DESC">
                     <option value="">MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_NULL</option>
                     <option value="ASC">MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_ASC</option>
                     <option value="DESC">MOD_RANDOM_ARTICLE_ORDERINGDIRECTION_DESC</option>
@@ -119,6 +119,11 @@
                 </field>
     
                 <field name="linktitle" type="radio" default="1" label="MOD_RANDOM_ARTICLE_LINK_TITLE_LABEL" description="MOD_RANDOM_ARTICLE_LINK_TITLE_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="article_category" type="radio" default="1" label="MOD_RANDOM_ARTICLE_DISPLAY_CATEGORY_LABEL" description="MOD_RANDOM_ARTICLE_DISPLAY_CATEGORY_DESC">
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
@@ -177,7 +182,6 @@
                 <field name="columnWidth" type="text" default="0" label="MOD_RANDOM_ARTICLE_COLUMNWIDTH_LABEL" description="MOD_RANDOM_ARTICLE_COLUMNWIDTH_DESC"/>
                 
                 <field name="columnMargin" type="text" default="0" label="MOD_RANDOM_ARTICLE_COLUMNMARGIN_LABEL" description="MOD_RANDOM_ARTICLE_COLUMNMARGIN_DESC"/>
-            
             </fieldset>
             
             <fieldset name="MOD_RANDOM_ARTICLE_STYLE" >
@@ -206,11 +210,13 @@
                     <option value="5">H5</option>
                     <option value="6">H6</option>
                 </field>
+
                 
                 <field type="spacer" label="MOD_RANDOM_ARTICLE_STYLE_READMORE_LABEL" />
                  <field name="styleReadmoreColor" type="color" default="" label="MOD_RANDOM_ARTICLE_STYLE_COLOR_LABEL" description="MOD_RANDOM_ARTICLE_STYLE_COLOR_DESC" />
                  <field name="styleReadmoreColorOver" type="color" default="" label="MOD_RANDOM_ARTICLE_STYLE_COLOROVER_LABEL" description="MOD_RANDOM_ARTICLE_STYLE_COLOROVER_DESC" />
                  
+                <field name="customStyle" label="MOD_RANDOM_ARTICLE_STYLE_CUSTOM_STYLE_LABEL" description="MOD_RANDOM_ARTICLE_STYLE_CUSTOM_STYLE_DESC" type="editor" filter="raw" />
             </fieldset>
             
             <fieldset name="MOD_RANDOM_ARTICLE_ADVANCED">    
@@ -223,7 +229,6 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field>
-
             </fieldset>
             
             <fieldset name="MOD_RANDOM_ARTICLE_DEBUG">

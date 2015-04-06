@@ -33,6 +33,34 @@
             <?php endif; ?>
         </div>
     <?php endif; ?>
+
+    <?php if ($params->get('article_category')): ?>
+    	<div class="category">
+    		<a href="index.php?option=com_content&view=category&id=<?php echo '$article->catid'; ?>&Itemid=102">
+    			<?php echo $article->cat_title; ?>
+    		</a>
+    	</div>
+    <?php endif; ?>
+    
+    <?php if ($params->get('introtextimage') && $article->type != "K2") : 
+
+        // Copied this code from componentes/com_content/views/category/tmpl/blog_item.php
+        $images = json_decode($article->images);
+        if (isset($images->image_intro) and !empty($images->image_intro)) : ?>
+            <div class="introimage">
+                <?php $imgfloat = (empty($images->float_intro)) ? $params->get('float_intro') : $images->float_intro; ?>
+                <div class="img-intro-<?php echo htmlspecialchars($imgfloat); ?>">
+                    <a href="<?php echo $urls[$articleIndex]; ?>">
+                        <img
+                        <?php if ($images->image_intro_caption):
+                                    echo 'class="caption"'.' title="' .htmlspecialchars($images->image_intro_caption) .'"';
+                            endif; ?>
+                        src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>"/>
+                    </a>
+                </div>
+            </div>            
+        <?php endif; ?>
+    <?php endif; ?>
     
     <?php if ($params->get('introtext')) : ?>
         <div class="introtext">
@@ -84,27 +112,7 @@
         <?php endif; ?>
         </div>
     <?php endif; ?>
-    
-    <?php if ($params->get('introtextimage') && $article->type != "K2") : 
 
-        // Copied this code from componentes/com_content/views/category/tmpl/blog_item.php
-        $images = json_decode($article->images);
-        if (isset($images->image_intro) and !empty($images->image_intro)) : ?>
-            <div class="introimage">
-                <?php $imgfloat = (empty($images->float_intro)) ? $params->get('float_intro') : $images->float_intro; ?>
-                <div class="img-intro-<?php echo htmlspecialchars($imgfloat); ?>">
-                    <a href="<?php echo $urls[$articleIndex]; ?>">
-                        <img
-                        <?php if ($images->image_intro_caption):
-                                    echo 'class="caption"'.' title="' .htmlspecialchars($images->image_intro_caption) .'"';
-                            endif; ?>
-                        src="<?php echo htmlspecialchars($images->image_intro); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>"/>
-                    </a>
-                </div>
-            </div>            
-        <?php endif; ?>
-    <?php endif; ?>
-    
     <?php 
     if ($params->get('introtextimage') && $article->type == "K2") :
         $imgsrc = modRandomArticleHelper::getK2ArticleImage($article, $params->get('k2imagesize'));     ?>
