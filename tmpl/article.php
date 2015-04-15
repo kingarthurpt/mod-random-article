@@ -51,7 +51,7 @@ $urls = $randomArticle->getUrls();
         </div>
     <?php endif; ?>
 
-    <?php if ($params->get('article_category')): ?>
+    <?php if ($params->get('article_category') && $article->type == 'Joomla'): ?>
     	<div class="category">
     		<?php echo JText::sprintf('MOD_RANDOM_ARTICLE_DISPLAY_CATEGORY');?>: 
     		<a href="index.php?option=com_content&view=category&id=<?php echo $article->catid; ?>&Itemid=102">
@@ -59,6 +59,7 @@ $urls = $randomArticle->getUrls();
     		</a>
     	</div>
     <?php endif; ?>
+    <?php // @TODO: Add K2 category url ?>
     
     <?php if ($params->get('introtextimage') && $article->type != "K2") : 
 

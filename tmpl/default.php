@@ -51,12 +51,6 @@ if ($numberColumns > 0) {
             if ($articles == 0 && $params->get('warnings')) {
                 echo JText::sprintf('MOD_RANDOM_ARTICLE_WARNING_3');
             }
-            if ($articles == -2) {
-                echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_1');
-            }
-            if ($articles == -3) {
-                echo JText::sprintf('MOD_RANDOM_ARTICLE_ERROR_2');
-            }
         } else {
                         
             // Shows a warning if the user didn't select the proper settings

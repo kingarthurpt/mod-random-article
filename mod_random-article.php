@@ -33,8 +33,28 @@ $useContentCatRouter = $params->get('contentCatUrl') ? true : false;
 $numberArticles = $params->get('numberArticles');
 $numberK2Articles = $params->get('numberArticlesK2');
 
-$articles = modRandomArticleHelper::getArticles($params);
-if ($articles > 0) { 
+$urls = array();
+$articles = array();
+
+try {
+	$joomlaArticles = $randomArticle->getJoomlaArticles($params);
+	$k2Articles = $randomArticle->getK2Articles($params);
+
+	if ($joomlaArticles) {
+		foreach ($joomlaArticles as $key => $joomlaArticle) {
+			array_push($articles, $joomlaArticle);
+		}
+	}
+	if ($k2Articles) {
+		foreach ($k2Articles as $key => $k2Article) {
+			array_push($articles, $k2Article);
+		}
+	}
+} catch (Exception $e) {
+	echo $e->getMessage();
+}
+
+if (count($articles) > 0) {
     $i = 0;
     foreach($articles as $article) {
         $urls[$i] = modRandomArticleHelper::getUrl($article, $addCurrentID, $useContentCatRouter);
