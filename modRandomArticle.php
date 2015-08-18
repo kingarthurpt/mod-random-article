@@ -73,6 +73,12 @@ class modRandomArticle
                 $query .= "( ".$categories." ) ";
                             
             $query .= " AND a.state = '1' ";
+            
+            $language = JFactory::getLanguage();
+			
+            if($language->getTag()){
+			    $query .= "AND a.language IN('*','".$language->getTag()."' ";
+			}
 
                         // Disables time restrictions and selects articles without checking if the dates are correct.
                         if(!$params->get('timerestrictions'))
