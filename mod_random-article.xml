@@ -30,6 +30,7 @@
     <files>
         <filename>mod_random-article.xml</filename>
         <filename module="mod_random-article">mod_random-article.php</filename>
+        <filename>modRandomArticle.php</filename>
         <filename>index.html</filename>
         <filename>helper.php</filename>
         <filename>tmpl/default.php</filename>
